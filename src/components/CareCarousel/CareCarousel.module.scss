@@ -1,0 +1,22 @@
+.track {
+  /* first card aligns with the title; peek bleeds off the right edge (no boxed container) */
+  width: calc(100% + var(--space-5));
+  margin-top: var(--space-4);
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.card {
+  flex-shrink: 0;
+  width: 300px;
+  height: 400px;
+  margin-right: var(--space-3);
+  border-radius: var(--radius-md);
+  background: #d9d9d9;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+}
