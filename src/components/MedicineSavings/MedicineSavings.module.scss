@@ -1,0 +1,229 @@
+.savings {
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionTitle {
+  color: var(--Color-Text-Primary, #100e15);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.48px;
+  margin-bottom: 12px;
+}
+
+.sectionSubtitle {
+  color: var(--Color-Text-Secondary, #686670);
+  text-align: center;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: var(--tracking-narrow, -0.12px);
+  margin-bottom: 17.5px;
+}
+
+.diagonals {
+  position: relative;
+  height: 250px;
+  margin-top: var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.diagBanner {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 0 0 12 12px;
+  border: 0.956px solid rgba(255, 172, 183, 0);
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
+    linear-gradient(
+      91deg,
+      rgba(15, 0, 69, 0.7) 1.64%,
+      rgba(98, 42, 253, 0.7) 99.27%
+    );
+  backdrop-filter: blur(21.036px);
+  color: var(--Color-buttons-Primary-Text, #fff);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.11px;
+  text-transform: lowercase;
+}
+
+/* blurred white ellipse glow — one per corner */
+.glow {
+  position: absolute;
+  width: 190px;
+  height: 106px;
+  border-radius: 50%;
+  background: #fff;
+  filter: blur(44px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.glowTL {
+  top: -44px;
+  left: -56px;
+  transform: rotate(-135.795deg);
+}
+
+.glowTR {
+  top: -44px;
+  right: -56px;
+  transform: rotate(135.795deg);
+}
+
+.glowBL {
+  bottom: -44px;
+  left: -56px;
+  transform: rotate(135.795deg);
+}
+
+.glowBR {
+  bottom: -44px;
+  right: -56px;
+  transform: rotate(-135.795deg);
+}
+
+.diagTrack {
+  position: absolute;
+  left: -50%;
+  width: 200%;
+
+  :global(.swiper-wrapper) {
+    transition-timing-function: linear !important;
+  }
+}
+
+.diagTrackA {
+  top: -40px;
+  transform: rotate(40deg);
+}
+
+.diagTrackB {
+  top: 172px;
+  transform: rotate(40deg);
+}
+
+.productSlide {
+  width: auto;
+  height: auto;
+}
+
+.productCard {
+  flex-shrink: 0;
+  width: 80px;
+  height: 134px;
+  padding: 6px;
+  border-radius: var(--radius-md);
+  background: #fff;
+  border: 1px solid rgba(16, 14, 21, 0.06);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.productThumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 100%;
+  height: 60px;
+  border-radius: 10px;
+  background: #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.productBadge {
+  margin-top: 2px;
+  align-self: flex-start;
+  width: fit-content;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background:
+    linear-gradient(90deg, #c6b8ff 0%, #ffdfe2 37%, #ffd7d3 100%) padding-box,
+    linear-gradient(90deg, #3100ff 0%, #faf9ff 100%) border-box;
+  color: #3100ff;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.productAdd {
+  position: absolute;
+  right: -9px;
+  bottom: -9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(124, 82, 233, 0.4);
+
+  svg {
+    display: block;
+  }
+}
+
+.productInfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 2px;
+}
+
+.productName {
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--Color-Text-Primary, #100e15);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.productPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--font-inter), Inter, sans-serif;
+}
+
+.productPrice strong {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--Color-Text-Primary, #100e15);
+}
+
+.productMrp {
+  font-size: 9px;
+  color: #9a98a0;
+  text-decoration: line-through;
+}

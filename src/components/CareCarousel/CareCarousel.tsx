@@ -8,7 +8,6 @@ import styles from "./CareCarousel.module.scss";
 
 type CareCarouselProps = {
   images: string[];
-  /** ms each slide holds before advancing */
   interval?: number;
 };
 
@@ -21,10 +20,14 @@ export default function CareCarousel({
       <Swiper
         modules={[Autoplay]}
         slidesPerView={1.2}
-        spaceBetween={20}
+        spaceBetween={16}
+        slidesOffsetBefore={16}
+        slidesOffsetAfter={16}
         loop
-        autoplay={{ delay: interval, disableOnInteraction: false }}
-        style={{ paddingLeft: 20, paddingRight: 20 }}
+        autoplay={{
+          delay: interval,
+          disableOnInteraction: false,
+        }}
       >
         {images.map((src, i) => (
           <SwiperSlide key={i} className={styles.slide}>

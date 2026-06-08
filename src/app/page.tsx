@@ -4,7 +4,6 @@ import {
   FiClock,
   FiCreditCard,
   FiMapPin,
-  FiPlus,
   FiStar,
 } from "react-icons/fi";
 import {
@@ -12,6 +11,7 @@ import {
   ClinicSection,
   FAQ,
   HeroSlides,
+  MedicineSavings,
   Navbar,
   ScanCarousel,
   TestimonialCarousel,
@@ -22,7 +22,6 @@ import {
   clinicFeatures,
   doctors,
   faqs,
-  products,
   testimonials,
   tests,
 } from "@/constants";
@@ -103,52 +102,7 @@ export default function Home() {
 
         <ClinicSection />
 
-        <section className={s.savings}>
-          <h2 className={s.sectionTitle}>Smarter Savings on Medicines</h2>
-          <p className={s.sectionSubtitle}>
-            Enjoy a minimum of 20% off on every order — delivered to you,
-            effortlessly.
-          </p>
-
-          <div className={s.diagonals}>
-            <div className={s.diagBanner}>20% off on all medicines</div>
-            <span className={clsx(s.glow, s.glowTL)} aria-hidden="true" />
-            <span className={clsx(s.glow, s.glowTR)} aria-hidden="true" />
-            <span className={clsx(s.glow, s.glowBL)} aria-hidden="true" />
-            <span className={clsx(s.glow, s.glowBR)} aria-hidden="true" />
-            {[s.diagTrackA, s.diagTrackB].map((track, t) => (
-              <div className={clsx(s.diagTrack, track)} key={t}>
-                <div className={s.diagRow}>
-                  {[0, 1, 2, 3].map((copy) => (
-                    <div
-                      className={s.diagGroup}
-                      key={copy}
-                      aria-hidden={copy !== 0}
-                    >
-                      {products.map((p) => (
-                        <article className={s.productCard} key={p.name}>
-                          <div className={s.productThumb}>
-                            <span className={s.productAdd}>
-                              <FiPlus aria-hidden="true" />
-                            </span>
-                          </div>
-                          <div className={s.productInfo}>
-                            <h3 className={s.productName}>{p.name}</h3>
-                            <div className={s.productPrice}>
-                              <strong>{p.price}</strong>
-                              <span className={s.productMrp}>{p.mrp}</span>
-                            </div>
-                          </div>
-                          <span className={s.productBadge}>{p.off} OFF</span>
-                        </article>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <MedicineSavings />
 
         <section className={s.savings}>
           <h2 className={s.sectionTitle}>

@@ -1,12 +1,16 @@
 .track {
-  /* full-bleed so slides clip/slide at the screen edges (edge-to-edge motion) */
-  margin-top: var(--space-4);
-  margin-left: calc(-1 * (var(--space-4) + var(--space-5)));
-  margin-right: calc(-1 * (var(--space-4) + var(--space-5)));
+  margin-right: -20px;
+  margin-left: -20px;
 }
 
 .slide {
   height: auto;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+
+  &:global(.swiper-slide-active) {
+    opacity: 1;
+  }
 }
 
 .card {

@@ -2,6 +2,7 @@ export { default as CareCarousel } from "./CareCarousel/CareCarousel";
 export { default as ClinicSection } from "./ClinicSection/ClinicSection";
 export { default as FAQ } from "./FAQ/FAQ";
 export { default as HeroSlides } from "./HeroSlides/HeroSlides";
+export { default as MedicineSavings } from "./MedicineSavings/MedicineSavings";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as ScanCarousel } from "./ScanCarousel/ScanCarousel";
 export { default as TestCard } from "./TestCard/TestCard";

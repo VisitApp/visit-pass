@@ -11,7 +11,13 @@ export default function ClinicSection() {
   return (
     <section className={s.clinicSection}>
       <h2 className={s.title}>Access to Visit Clinic</h2>
-      <Image src="./images/VisitClinic.png" height={240} width={335} alt="" />
+      <Image
+        className={s.heroImage}
+        src="./images/VisitClinic.png"
+        height={240}
+        width={335}
+        alt=""
+      />
       <div className={s.benefitList}>
         {benefits.map((b, i) => (
           <div className={s.benefitCard} key={b.title}>
