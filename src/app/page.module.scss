@@ -511,60 +511,6 @@
 
 /* ---- Access to Visit Clinic section ---- */
 
-.clinicSection {
-  background: url("/images/ClinicBg.png") center center / cover no-repeat;
-  margin-top: 8px;
-  padding: 32px 20px;
-  .title {
-    color: #fff;
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 24px;
-  }
-
-  .benefitCard {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-radius: 16px;
-    padding: 16px;
-    background: rgba(255, 255, 255, 0.08);
-    background-blend-mode: color-dodge, normal;
-    box-shadow: 0 2px 43px 0 rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(30px);
-  }
-  .benefitIcon {
-    flex-shrink: 0;
-    width: 32px;
-    height: 32px;
-  }
-  .benefitText {
-    display: flex;
-    flex-direction: column;
-  }
-  .benefitTitle {
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 6px;
-  }
-  .benefitSubtitle {
-    color: #fff;
-    font-size: 12px;
-  }
-  .benefitList {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .titleBottom {
-    color: #fff;
-    text-align: center;
-    font-size: 17px;
-    margin-top: 24px;
-  }
-}
-
 .clinicCard {
   display: flex;
   flex-direction: column;

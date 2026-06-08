@@ -9,6 +9,7 @@ import {
 } from "react-icons/fi";
 import {
   CareCarousel,
+  ClinicSection,
   FAQ,
   HeroSlides,
   Navbar,
@@ -16,11 +17,7 @@ import {
   TestimonialCarousel,
 } from "@/components";
 import { clsx } from "@/utils/helpers";
-import Calendar from "@/icons/Calendar.svg";
-import Clock from "@/icons/Clock.svg";
-import Discount from "@/icons/Discount.svg";
 import {
-  benefits,
   careImages,
   clinicFeatures,
   doctors,
@@ -36,8 +33,6 @@ const clinicIcons = {
   pin: FiMapPin,
   clock: FiClock,
 } as const;
-
-const benefitIcons = [Clock, Calendar, Discount];
 import s from "./page.module.scss";
 
 export default function Home() {
@@ -106,40 +101,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={s.clinicSection}>
-          <h2 className={s.title}>Access to Visit Clinic</h2>
-          <Image
-            src="./images/VisitClinic.png"
-            height={240}
-            width={335}
-            alt={""}
-          />
-          <div className={s.benefitList}>
-            {benefits.map((b, i) => (
-              <div className={s.benefitCard} key={b.title}>
-                {benefitIcons[i] && (
-                  <Image
-                    className={s.benefitIcon}
-                    src={benefitIcons[i]}
-                    alt=""
-                    width={32}
-                    height={32}
-                  />
-                )}
-                <div className={s.benefitText}>
-                  <h3 className={s.benefitTitle}>{b.title}</h3>
-                  {b.subtitle && (
-                    <p className={s.benefitSubtitle}>{b.subtitle}</p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-          <h2 className={s.titleBottom}>
-            No waiting, no billing,
-            <br /> no hassles
-          </h2>
-        </section>
+        <ClinicSection />
 
         <section className={s.savings}>
           <h2 className={s.sectionTitle}>Smarter Savings on Medicines</h2>
