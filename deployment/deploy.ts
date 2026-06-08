@@ -1,16 +1,10 @@
 #!/usr/bin/env tsx
 import path from "node:path";
 import { createRequire } from "node:module";
-import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import mime from "mime-types";
 import chalk from "chalk";
-import inquirer from "inquirer";
-import Mustache from "mustache";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Required because chalk v4 is CJS
 const require = createRequire(import.meta.url);
@@ -34,6 +28,7 @@ interface ProjectConfig {
 interface AwsCredentials {
   accessKeyId: string;
   secretAccessKey: string;
+  sessionToken?: string;
 }
 
 const DEFAULT_BUCKET = "visit-cdn";
@@ -53,16 +48,26 @@ const die = (message: string): never => {
   process.exit(1);
 };
 
-const createFileFromTemplate = (
-  templatePath: string,
-  outputPath: string,
-  config: Record<string, string>,
-): void => {
-  const output = Mustache.render(
-    fs.readFileSync(templatePath, { encoding: "utf8" }),
-    config,
-  );
-  fs.writeFileSync(outputPath, output);
+/**
+ * Load `KEY=value` pairs from a dotenv file into process.env without clobbering
+ * vars already set in the environment (real env / CI secrets always win).
+ * No-op if the file is absent. Deliberately minimal — no dep, no export/quotes
+ * gymnastics beyond stripping one layer of surrounding quotes.
+ */
+const loadEnvFile = (filePath: string): void => {
+  if (!fs.existsSync(filePath)) return;
+  for (const raw of fs.readFileSync(filePath, "utf8").split("\n")) {
+    const line = raw.trim();
+    if (!line || line.startsWith("#")) continue;
+    const eq = line.indexOf("=");
+    if (eq === -1) continue;
+    const key = line.slice(0, eq).trim();
+    if (!key || key in process.env) continue;
+    process.env[key] = line
+      .slice(eq + 1)
+      .trim()
+      .replace(/^(['"])(.*)\1$/, "$2");
+  }
 };
 
 const getAllFiles = (dirPath: string, fileList: string[] = []): string[] => {
@@ -100,29 +105,54 @@ const isNoCache = (key: string): boolean =>
   key.endsWith(".json") ||
   key === "sw.js";
 
-const resolveCredentials = (): AwsCredentials => {
+/**
+ * Resolve credentials, most-secure path first:
+ *   1. Explicit env vars (CI secrets, `export AWS_*`, OIDC-assumed sessions).
+ *   2. Returning `undefined` → hand off to the AWS SDK default provider chain,
+ *      which transparently resolves shared profiles / SSO, OIDC web-identity
+ *      tokens (`AWS_ROLE_ARN` + `AWS_WEB_IDENTITY_TOKEN_FILE` in CI), and
+ *      EC2/ECS instance roles. This is the preferred production path — no
+ *      long-lived keys ever touch disk.
+ *   3. Legacy `.userconfig` plaintext keys — DEPRECATED, kept only so existing
+ *      local setups keep working. Warns loudly.
+ */
+const resolveCredentials = (): AwsCredentials | undefined => {
   if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
     return {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      ...(process.env.AWS_SESSION_TOKEN
+        ? { sessionToken: process.env.AWS_SESSION_TOKEN }
+        : {}),
     };
   }
-  try {
-    const userConfig: UserConfig = JSON.parse(
-      fs.readFileSync(path.join(process.cwd(), "./.userconfig")).toString(),
-    );
-    if (!process.env.AWS_REGION && userConfig.awsRegion) {
-      process.env.AWS_REGION = userConfig.awsRegion;
+
+  const legacyPath = path.join(process.cwd(), "./.userconfig");
+  if (fs.existsSync(legacyPath)) {
+    try {
+      const userConfig: UserConfig = JSON.parse(
+        fs.readFileSync(legacyPath, "utf8"),
+      );
+      if (userConfig.awsAccessKey && userConfig.awsSecretKey) {
+        log.warn(
+          ".userconfig is DEPRECATED — plaintext AWS keys on disk. " +
+            "Prefer env vars, `aws configure sso`, or OIDC. See deployment/.env.example.",
+        );
+        if (!process.env.AWS_REGION && userConfig.awsRegion) {
+          process.env.AWS_REGION = userConfig.awsRegion;
+        }
+        return {
+          accessKeyId: userConfig.awsAccessKey,
+          secretAccessKey: userConfig.awsSecretKey,
+        };
+      }
+    } catch {
+      /* malformed legacy file — fall through to the SDK provider chain */
     }
-    return {
-      accessKeyId: userConfig.awsAccessKey,
-      secretAccessKey: userConfig.awsSecretKey,
-    };
-  } catch {
-    return die(
-      "Could not read .userconfig — make sure it exists and is readable, or set AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY.",
-    );
   }
+
+  // Let the AWS SDK resolve from profile / SSO / OIDC / instance role.
+  return undefined;
 };
 
 const invalidateCloudFront = async (
@@ -172,7 +202,12 @@ const deployProject = async (projectConfig: ProjectConfig): Promise<void> => {
   }
 
   const files = getAllFiles(distPath);
-  const s3 = new S3Client({ region, credentials, maxAttempts: 3 });
+  const s3 = new S3Client({
+    region,
+    maxAttempts: 3,
+    // Omit `credentials` when undefined so the SDK default provider chain runs.
+    ...(credentials ? { credentials } : {}),
+  });
 
   log.info(
     `Deploying ${chalkCjs.bold(String(files.length))} files → ` +
@@ -232,6 +267,10 @@ const deployProject = async (projectConfig: ProjectConfig): Promise<void> => {
 };
 
 const run = async (): Promise<void> => {
+  // Pick up local secrets/config from a gitignored dotenv if present.
+  loadEnvFile(path.join(process.cwd(), "deployment/.env"));
+  loadEnvFile(path.join(process.cwd(), ".env"));
+
   let projectConfig: ProjectConfig;
   try {
     projectConfig = JSON.parse(
@@ -241,41 +280,6 @@ const run = async (): Promise<void> => {
     return die(
       "Could not read ./projectconfig — make sure it exists and is readable.",
     );
-  }
-
-  const haveEnvCreds = Boolean(
-    process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY,
-  );
-  const userconfigPath = path.join(process.cwd(), "./.userconfig");
-
-  if (!haveEnvCreds && !fs.existsSync(userconfigPath)) {
-    log.warn("No credentials found — let's set up .userconfig");
-    const answers = await inquirer.prompt<UserConfig>([
-      {
-        type: "input",
-        message: "AWS Access Key",
-        name: "awsAccessKey",
-        validate: (a: string) => a.trim() !== "" || "Please enter a valid key",
-      },
-      {
-        type: "password",
-        message: "AWS Secret Key",
-        name: "awsSecretKey",
-        validate: (a: string) => a.trim() !== "" || "Please enter a valid key",
-      },
-      {
-        type: "input",
-        message: "AWS region",
-        name: "awsRegion",
-        default: DEFAULT_REGION,
-      },
-    ]);
-    createFileFromTemplate(
-      path.join(__dirname, "./.userconfig.mustache"),
-      userconfigPath,
-      answers as unknown as Record<string, string>,
-    );
-    log.ok("Wrote .userconfig (gitignored)");
   }
 
   await deployProject(projectConfig);

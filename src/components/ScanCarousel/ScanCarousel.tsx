@@ -1,32 +1,35 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
+import { clsx } from "@/utils/helpers";
+import TestCard, { type TestCardData } from "../TestCard/TestCard";
 import styles from "./ScanCarousel.module.scss";
 
-type ScanItem = { label: string };
-
 type ScanCarouselProps = {
-  items: ScanItem[];
+  items: TestCardData[];
   /** ms between steps (hold + scroll) */
   interval?: number;
 };
 
 const CARD_WIDTH = 120;
-const GAP = 20; // sides tuck behind the center yet bleed a bit off the edges
+const GAP = 20; // neighbours tuck behind the scaled-up active card
 const PITCH = CARD_WIDTH + GAP;
-const COPIES = 3;
+const STEP_DURATION = 0.9; // s
 
 export default function ScanCarousel({
   items,
   interval = 2600,
 }: ScanCarouselProps) {
   const n = items.length;
-  const list = Array.from({ length: COPIES }).flatMap(() => items);
+  const half = Math.floor(n / 2);
 
   const [step, setStep] = useState(0);
-  const [animate, setAnimate] = useState(true);
   const [vw, setVw] = useState(0);
   const viewportRef = useRef<HTMLDivElement>(null);
+  // signed distance each card held on the previous render — used to spot the
+  // card that wraps edge-to-edge so it teleports instead of sliding across.
+  const prevDist = useRef<number[]>([]);
 
   // track viewport width so the active card stays centered
   useEffect(() => {
@@ -45,44 +48,49 @@ export default function ScanCarousel({
     return () => clearInterval(id);
   }, [interval]);
 
-  // re-enable transition the frame after an instant reset
-  useEffect(() => {
-    if (!animate) {
-      const r = requestAnimationFrame(() =>
-        requestAnimationFrame(() => setAnimate(true))
-      );
-      return () => cancelAnimationFrame(r);
-    }
-  }, [animate]);
+  const active = ((step % n) + n) % n;
 
-  const handleEnd = () => {
-    if (step >= n) {
-      setAnimate(false);
-      setStep(0);
-    }
+  // ring distance of card i from the active card, folded into [-half, +half]
+  const signedDist = (i: number): number => {
+    const d = (((i - active) % n) + n) % n; // 0 … n-1
+    return d > half ? d - n : d; // negative on the left side
   };
 
-  // center the active card (kept in the middle copy so items flank both sides)
-  const activeIndex = n + step;
-  const translate = vw / 2 - (activeIndex * PITCH + CARD_WIDTH / 2);
+  const dists = Array.from({ length: n }, (_, i) => signedDist(i));
+
+  // remember this render's layout so the next one can detect the wrap
+  useEffect(() => {
+    prevDist.current = dists;
+  });
 
   return (
     <div className={styles.viewport} ref={viewportRef}>
-      <div
-        className={`${styles.row} ${animate ? "" : styles.instant}`}
-        style={{
-          transform: `translateX(${translate}px)`,
-          transition: animate ? "transform 0.9s ease" : "none",
-        }}
-        onTransitionEnd={handleEnd}
-      >
-        {list.map((_, i) => (
-          <div
+      {dists.map((d, i) => {
+        const x = vw / 2 - CARD_WIDTH / 2 + d * PITCH;
+        const prev = prevDist.current[i];
+        // a normal step moves a card by one pitch; a bigger jump means it just
+        // wrapped from one edge to the other — snap it instantly.
+        const wrapped = prev !== undefined && Math.abs(d - prev) > 1;
+        return (
+          <motion.div
             key={i}
-            className={`${styles.card} ${i === activeIndex ? styles.active : ""}`}
-          />
-        ))}
-      </div>
+            className={clsx(styles.slot, d === 0 && styles.slotActive)}
+            style={{ width: CARD_WIDTH, y: "-50%" }}
+            initial={false}
+            animate={{ x }}
+            transition={
+              wrapped
+                ? { duration: 0 }
+                : { duration: STEP_DURATION, ease: "easeInOut" }
+            }
+          >
+            <TestCard
+              {...items[i]}
+              className={clsx(styles.card, d === 0 && styles.cardActive)}
+            />
+          </motion.div>
+        );
+      })}
     </div>
   );
 }

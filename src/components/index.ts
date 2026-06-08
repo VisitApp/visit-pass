@@ -1,4 +1,8 @@
 export { default as CareCarousel } from "./CareCarousel/CareCarousel";
+export { default as FAQ } from "./FAQ/FAQ";
 export { default as HeroSlides } from "./HeroSlides/HeroSlides";
 export { default as Navbar } from "./Navbar/Navbar";
 export { default as ScanCarousel } from "./ScanCarousel/ScanCarousel";
+export { default as TestCard } from "./TestCard/TestCard";
+export { default as Testimonial } from "./Testimonial/Testimonial";
+export { default as TestimonialCarousel } from "./TestimonialCarousel/TestimonialCarousel";

@@ -7,7 +7,7 @@ import styles from "./Navbar.module.scss";
 
 type NavbarProps = {
   title?: string;
-  /** Centered logo source (e.g. "/VisitLogo.webp"). */
+  /** Centered logo source (e.g. "/images/VisitLogo.webp"). */
   logoSrc?: string;
   /** Override default back behavior (router.back). */
   onBack?: () => void;

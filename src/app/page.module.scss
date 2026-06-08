@@ -32,7 +32,7 @@
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  background: url("/hero-container.webp") center / cover no-repeat;
+  background: url("/images/showcaseBg.webp") center / cover no-repeat;
   color: var(--text-on-dark);
 }
 
@@ -268,10 +268,13 @@
 /* ---- Smarter Savings section ---- */
 
 .savings {
-  padding: var(--space-6) var(--space-5);
+  padding: 32px 20px;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+}
+
+.faqSection {
+  background: #faf5ef;
 }
 
 .sectionTitle {
@@ -282,6 +285,7 @@
   font-weight: 600;
   line-height: 120%;
   letter-spacing: -0.48px;
+  margin-bottom: 12px;
 }
 
 .sectionSubtitle {
@@ -292,6 +296,7 @@
   font-weight: 500;
   line-height: 150%;
   letter-spacing: var(--tracking-narrow, -0.12px);
+  margin-bottom: 17.5px;
 }
 
 .diagonals {
@@ -315,10 +320,16 @@
   border: 0.956px solid rgba(255, 172, 183, 0);
   background:
     linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
-    linear-gradient(91deg, rgba(15, 0, 69, 0.7) 1.64%, rgba(98, 42, 253, 0.7) 99.27%);
+    linear-gradient(
+      91deg,
+      rgba(15, 0, 69, 0.7) 1.64%,
+      rgba(98, 42, 253, 0.7) 99.27%
+    );
   backdrop-filter: blur(21.036px);
   color: var(--Color-buttons-Primary-Text, #fff);
-  font-feature-settings: "liga" off, "clig" off;
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
   font-family: var(--font-inter), Inter, sans-serif;
   font-size: 11px;
   font-style: normal;
@@ -498,4 +509,95 @@
   text-decoration: line-through;
 }
 
+/* ---- Access to Visit Clinic section ---- */
 
+.clinicSection {
+  background: url("/images/ClinicBg.png") center center / cover no-repeat;
+  margin-top: 8px;
+  padding: 32px 20px;
+  .title {
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .benefitCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 16px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    background-blend-mode: color-dodge, normal;
+    box-shadow: 0 2px 43px 0 rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(30px);
+  }
+  .benefitIcon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+  }
+  .benefitText {
+    display: flex;
+    flex-direction: column;
+  }
+  .benefitTitle {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .benefitSubtitle {
+    color: #fff;
+    font-size: 12px;
+  }
+  .benefitList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .titleBottom {
+    color: #fff;
+    text-align: center;
+    font-size: 17px;
+    margin-top: 24px;
+  }
+}
+
+.clinicCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: #fff;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.06);
+}
+
+.clinicIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: rgba(124, 82, 233, 0.12);
+  color: #7c52e9;
+  font-size: 20px;
+}
+
+.clinicCardTitle {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 120%;
+  color: var(--Color-Text-Primary, #100e15);
+}
+
+.clinicCardText {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 150%;
+  color: var(--Color-Text-Secondary, #686670);
+}

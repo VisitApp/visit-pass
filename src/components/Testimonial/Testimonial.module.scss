@@ -1,0 +1,72 @@
+.card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #f3f4f6;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.content {
+  padding: 16px 0 6px;
+}
+
+.quoteIcon {
+  margin-bottom: 8px;
+  color: #ed825e;
+}
+
+.quote {
+  margin: 0 0 20px;
+  padding: 0 32px;
+  color: var(--Gray-600, #686670);
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 160%;
+}
+
+.author {
+  margin-bottom: 0;
+}
+
+.name {
+  margin: 0;
+  color: var(--Color-Text-Primary, #100e15);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.role {
+  margin: 0;
+  padding: 0;
+  color: var(--Color-Text-Secondary, #686670);
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.banner {
+  width: 100%;
+  padding: 4.5px 16px;
+  background: #e6faf2;
+}
+
+.bannerText {
+  margin: 0;
+  color: var(--Color-Text-Success, #1eb865);
+  font-feature-settings: "liga" off, "clig" off;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 150%;
+}

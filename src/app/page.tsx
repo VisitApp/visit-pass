@@ -1,60 +1,56 @@
 import Image from "next/image";
-import { FiPlus, FiStar } from "react-icons/fi";
-import { CareCarousel, HeroSlides, Navbar, ScanCarousel } from "@/components";
-import styles from "./page.module.scss";
+import {
+  FiCheckCircle,
+  FiClock,
+  FiCreditCard,
+  FiMapPin,
+  FiPlus,
+  FiStar,
+} from "react-icons/fi";
+import {
+  CareCarousel,
+  FAQ,
+  HeroSlides,
+  Navbar,
+  ScanCarousel,
+  TestimonialCarousel,
+} from "@/components";
+import { clsx } from "@/utils/helpers";
+import Calendar from "@/icons/Calendar.svg";
+import Clock from "@/icons/Clock.svg";
+import Discount from "@/icons/Discount.svg";
+import {
+  benefits,
+  careImages,
+  clinicFeatures,
+  doctors,
+  faqs,
+  products,
+  testimonials,
+  tests,
+} from "@/constants";
 
-const scans = [
-  { label: "MRI" },
-  { label: "X-Ray" },
-  { label: "CT Scan" },
-  { label: "Blood Test" },
-  { label: "Ultrasound" },
-  { label: "ECG" },
-];
+const clinicIcons = {
+  card: FiCreditCard,
+  check: FiCheckCircle,
+  pin: FiMapPin,
+  clock: FiClock,
+} as const;
 
-const products = [
-  { name: "Paracetamol 500mg", price: "₹40", mrp: "₹50", off: "20%" },
-  { name: "Vitamin D3", price: "₹180", mrp: "₹240", off: "25%" },
-  { name: "Cough Syrup", price: "₹95", mrp: "₹120", off: "21%" },
-  { name: "Multivitamin", price: "₹320", mrp: "₹420", off: "24%" },
-  { name: "Pain Relief Gel", price: "₹110", mrp: "₹140", off: "21%" },
-];
-
-const doctors = [
-  {
-    name: "Dr. Aisha Khan",
-    specialty: "Cardiologist",
-    experience: "12 yrs exp",
-    rating: "4.9",
-    initials: "AK",
-  },
-  {
-    name: "Dr. Rohan Mehta",
-    specialty: "Dermatologist",
-    experience: "9 yrs exp",
-    rating: "4.8",
-    initials: "RM",
-  },
-  {
-    name: "Dr. Sara Iyer",
-    specialty: "Pediatrician",
-    experience: "15 yrs exp",
-    rating: "4.9",
-    initials: "SI",
-  },
-];
+const benefitIcons = [Clock, Calendar, Discount];
+import s from "./page.module.scss";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <section className={styles.hero}>
-          <Navbar logoSrc="/VisitLogo.webp" />
-          <div className={styles.heroBody}>
+    <div className={s.page}>
+      <main className={s.main}>
+        <section className={s.hero}>
+          <Navbar logoSrc="/images/VisitLogo.webp" />
+          <div className={s.heroBody}>
             <HeroSlides />
             <Image
-              className={styles.heroBadge}
-              src="/offer.png"
+              className={s.heroBadge}
+              src="/images/offer.png"
               alt="OPD Pass Membership"
               width={276}
               height={48}
@@ -62,42 +58,46 @@ export default function Home() {
             />
           </div>
         </section>
-        <div className={styles.marquee}>
-          <div className={styles.marqueeTrack}>
+        <div className={s.marquee}>
+          <div className={s.marqueeTrack}>
             {Array.from({ length: 2 }).map((_, copy) => (
-              <ul className={styles.marqueeGroup} key={copy} aria-hidden={copy === 1}>
+              <ul
+                className={s.marqueeGroup}
+                key={copy}
+                aria-hidden={copy === 1}
+              >
                 {["Consultation", "Lab Test", "Visit Clinic", "Cashless"].map(
                   (item) => (
-                    <li key={item} className={styles.marqueeItem}>
+                    <li key={item} className={s.marqueeItem}>
                       {item}
                     </li>
-                  )
+                  ),
                 )}
               </ul>
             ))}
           </div>
         </div>
-        <section className={styles.doctors}>
-          <h2 className={styles.doctorsTitle}>
+        <section className={s.doctors}>
+          <h2 className={s.doctorsTitle}>
             Meet our Doctors as many times as you need
           </h2>
-          <p className={styles.doctorsSubtitle}>
+          <p className={s.doctorsSubtitle}>
             Unlock free unlimited doctor consultations and thorough lab tests
             for the whole year
           </p>
 
-          <div className={styles.cardStack}>
+          <div className={s.cardStack}>
             {doctors.map((doc) => (
-              <article className={styles.card} key={doc.name}>
-                <div className={styles.cardTop}>
-                  <span className={styles.avatar}>{doc.initials}</span>
-                  <div className={styles.cardRating}>
+              <article className={s.card} key={doc.name}>
+                <div className={s.cardTop}>
+                  <span className={s.avatar}>{doc.initials}</span>
+                  <div className={s.cardRating}>
                     <FiStar aria-hidden="true" /> {doc.rating}
                   </div>
                 </div>
-                <div className={styles.cardBody}>
-                  <h3 className={styles.cardName}>{doc.name}</h3>
-                  <p className={styles.cardSpecialty}>
+                <div className={s.cardBody}>
+                  <h3 className={s.cardName}>{doc.name}</h3>
+                  <p className={s.cardSpecialty}>
                     {doc.specialty} · {doc.experience}
                   </p>
                 </div>
@@ -106,43 +106,78 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.savings}>
-          <h2 className={styles.sectionTitle}>Smarter Savings on Medicines</h2>
-          <p className={styles.sectionSubtitle}>
+        <section className={s.clinicSection}>
+          <h2 className={s.title}>Access to Visit Clinic</h2>
+          <Image
+            src="./images/VisitClinic.png"
+            height={240}
+            width={335}
+            alt={""}
+          />
+          <div className={s.benefitList}>
+            {benefits.map((b, i) => (
+              <div className={s.benefitCard} key={b.title}>
+                {benefitIcons[i] && (
+                  <Image
+                    className={s.benefitIcon}
+                    src={benefitIcons[i]}
+                    alt=""
+                    width={32}
+                    height={32}
+                  />
+                )}
+                <div className={s.benefitText}>
+                  <h3 className={s.benefitTitle}>{b.title}</h3>
+                  {b.subtitle && (
+                    <p className={s.benefitSubtitle}>{b.subtitle}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <h2 className={s.titleBottom}>
+            No waiting, no billing,
+            <br /> no hassles
+          </h2>
+        </section>
+
+        <section className={s.savings}>
+          <h2 className={s.sectionTitle}>Smarter Savings on Medicines</h2>
+          <p className={s.sectionSubtitle}>
             Enjoy a minimum of 20% off on every order — delivered to you,
             effortlessly.
           </p>
 
-          <div className={styles.diagonals}>
-            <div className={styles.diagBanner}>20% off on all medicines</div>
-            <span className={`${styles.glow} ${styles.glowTL}`} aria-hidden="true" />
-            <span className={`${styles.glow} ${styles.glowTR}`} aria-hidden="true" />
-            <span className={`${styles.glow} ${styles.glowBL}`} aria-hidden="true" />
-            <span className={`${styles.glow} ${styles.glowBR}`} aria-hidden="true" />
-            {[styles.diagTrackA, styles.diagTrackB].map((track, t) => (
-              <div className={`${styles.diagTrack} ${track}`} key={t}>
-                <div className={styles.diagRow}>
+          <div className={s.diagonals}>
+            <div className={s.diagBanner}>20% off on all medicines</div>
+            <span className={clsx(s.glow, s.glowTL)} aria-hidden="true" />
+            <span className={clsx(s.glow, s.glowTR)} aria-hidden="true" />
+            <span className={clsx(s.glow, s.glowBL)} aria-hidden="true" />
+            <span className={clsx(s.glow, s.glowBR)} aria-hidden="true" />
+            {[s.diagTrackA, s.diagTrackB].map((track, t) => (
+              <div className={clsx(s.diagTrack, track)} key={t}>
+                <div className={s.diagRow}>
                   {[0, 1, 2, 3].map((copy) => (
                     <div
-                      className={styles.diagGroup}
+                      className={s.diagGroup}
                       key={copy}
                       aria-hidden={copy !== 0}
                     >
                       {products.map((p) => (
-                        <article className={styles.productCard} key={p.name}>
-                          <div className={styles.productThumb}>
-                            <span className={styles.productAdd}>
+                        <article className={s.productCard} key={p.name}>
+                          <div className={s.productThumb}>
+                            <span className={s.productAdd}>
                               <FiPlus aria-hidden="true" />
                             </span>
                           </div>
-                          <div className={styles.productInfo}>
-                            <h3 className={styles.productName}>{p.name}</h3>
-                            <div className={styles.productPrice}>
+                          <div className={s.productInfo}>
+                            <h3 className={s.productName}>{p.name}</h3>
+                            <div className={s.productPrice}>
                               <strong>{p.price}</strong>
-                              <span className={styles.productMrp}>{p.mrp}</span>
+                              <span className={s.productMrp}>{p.mrp}</span>
                             </div>
                           </div>
-                          <span className={styles.productBadge}>{p.off} OFF</span>
+                          <span className={s.productBadge}>{p.off} OFF</span>
                         </article>
                       ))}
                     </div>
@@ -153,30 +188,49 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.savings}>
-          <h2 className={styles.sectionTitle}>
+        <section className={s.savings}>
+          <h2 className={s.sectionTitle}>
             All tests and Scans are covered for you
           </h2>
-          <p className={styles.sectionSubtitle}>
+          <p className={s.sectionSubtitle}>
             Your OPD Pass will cover all tests and radiology scans prescribed by
             our doctors, including MRIs, XRAYs and more.
           </p>
 
-          <ScanCarousel items={scans} />
+          <ScanCarousel items={tests} />
         </section>
 
-        <section className={styles.savings}>
-          <h2 className={styles.sectionTitle}>
+        <section className={s.savings}>
+          <h2 className={s.sectionTitle}>
             Care that goes
             <br />
             beyond the consult
           </h2>
-          <p className={styles.sectionSubtitle}>
-            Set the goal. Take the action. Watch the risk. Care that doesn&apos;t
-            pause when your consult ends.
+          <p className={s.sectionSubtitle}>
+            Set the goal. Take the action. Watch the risk. Care that
+            doesn&apos;t pause when your consult ends.
           </p>
 
-          <CareCarousel count={4} />
+          <CareCarousel images={careImages} />
+        </section>
+
+        <section className={clsx(s.savings, s.faqSection)}>
+          <h2 className={s.sectionTitle}>Testimonials</h2>
+          <p className={s.sectionSubtitle}>
+            Better care, lower costs proven by the people who matter most
+          </p>
+
+          <TestimonialCarousel items={testimonials} />
+        </section>
+
+        <section className={clsx(s.savings, s.faqSection)}>
+          <h2 className={s.sectionTitle}>Frequently asked questions</h2>
+          <p className={s.sectionSubtitle}>
+            For any unanswered questions, reach out to our support team via
+            email
+          </p>
+
+          <FAQ items={faqs} />
         </section>
       </main>
     </div>

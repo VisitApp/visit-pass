@@ -1,0 +1,24 @@
+.carousel {
+  /* a little side room so the card's shadow isn't clipped */
+  padding: 0 4px;
+}
+
+/* dots rendered below the cards */
+.carousel :global(.swiper-pagination) {
+  position: static;
+  margin-top: 24px;
+}
+
+.carousel :global(.swiper-pagination-bullet) {
+  width: 8px;
+  height: 8px;
+  background: #faf5ef;
+  opacity: 1;
+  transition: width 0.25s ease, background-color 0.25s ease;
+}
+
+.carousel :global(.swiper-pagination-bullet-active) {
+  width: 20px;
+  border-radius: 4px;
+  background: #e6734d;
+}

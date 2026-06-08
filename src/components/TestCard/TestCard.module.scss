@@ -1,0 +1,135 @@
+.card {
+  width: 306px;
+  background: #ffffff;
+  border: 1px solid #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 10px -3px rgba(0, 0, 0, 0.1),
+    0 3px 4px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Frequently-booked banner */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 6px;
+  background: #fff1e0;
+}
+
+.trendIcon {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  color: #b48a54;
+}
+
+.headerText {
+  color: #b48a54;
+  font-size: 6px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 7px;
+}
+
+.title {
+  margin: 0;
+  padding-right: 4px;
+  color: #1a1a1a;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.included {
+  width: fit-content;
+  margin: 0;
+  padding-bottom: 1px;
+  color: #9ca3af;
+  font-size: 6px;
+  border-bottom: 1px dotted #d1d5db;
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.pricing {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.price {
+  color: #1a1a1a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.mrp {
+  color: #9ca3af;
+  font-size: 6px;
+  text-decoration: line-through;
+}
+
+.discount {
+  width: fit-content;
+  padding: 1px 4px;
+  background: #108548;
+  color: #ffffff;
+  font-size: 5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 7px;
+  background: #7056ff;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #5e45e6;
+  }
+}
+
+/* warm strip at the base, matching the source design */
+.bottomStrip {
+  width: 100%;
+  height: 5px;
+  background: #fdf8f2;
+  opacity: 0.3;
+}
