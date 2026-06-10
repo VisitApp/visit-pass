@@ -1,0 +1,228 @@
+.outerBorder {
+  width: 100%;
+  margin: 20px auto;
+  padding: 2px;
+  background: linear-gradient(
+    to bottom,
+    #6330f8 0%,
+    #ffffff 42%,
+    #ffffff 55%,
+    #ed825e 100%
+  );
+  border-radius: 24px;
+  position: relative;
+}
+
+.card {
+  position: relative;
+  height: 100%;
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  right: 32px;
+  z-index: 10;
+  background: linear-gradient(94deg, #0f0045 -0.01%, #714fff 99.99%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 6px;
+  border-radius: 200px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  padding: 24px 12px;
+}
+
+/* ---- header ---- */
+.header {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 32px;
+  margin-bottom: 24px;
+  color: #fff;
+  background: url("/images/GoldCardBg.png") center center / cover no-repeat;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.headerGlow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background: radial-gradient(circle at top right, #fff, transparent 60%);
+}
+
+.headerInner {
+  position: relative;
+  z-index: 10;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.title {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.goldTag {
+  background: linear-gradient(
+    to right,
+    #f9c40c 0%,
+    #fdf76d 33%,
+    #dd9900 67%,
+    #ffd600 100%
+  );
+  color: #754100;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.tagline {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 48px;
+}
+
+.priceBlock {
+  margin-top: 16px;
+}
+
+.startingAt {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fde047;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.price,
+.per {
+  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.price {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.per {
+  font-size: 18px;
+}
+
+.billed {
+  font-size: 12px;
+  color: #fff;
+  margin-top: 4px;
+}
+
+/* ---- divider ---- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dividerLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: #686670;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dividerLine {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(161, 118, 59, 0.5) 0%,
+    rgba(227, 195, 150, 0) 100%
+  );
+}
+
+/* ---- benefits ---- */
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 8px;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+}
+
+.iconBox {
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fdf2e3;
+  border-radius: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #fb923c;
+}
+
+.benefitTitle {
+  font-weight: 600;
+  color: #222226;
+  font-size: 13px;
+}
+
+.benefitSubtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: #686670;
+}
+
+.highlight {
+  color: #1eb865;
+  font-weight: 700;
+  font-size: 12px;
+  font-style: italic;
+}

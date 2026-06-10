@@ -1,0 +1,144 @@
+.heroWrap {
+  flex-shrink: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: url("/images/showcaseBg.webp") center / cover no-repeat;
+  color: var(--text-on-dark);
+}
+
+.heroBody {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scrollCue {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+.scrollText {
+  margin-bottom: 4px;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+}
+
+.chevron {
+  width: 22px;
+  height: 22px;
+  margin-top: -10px;
+  color: #9ca3af;
+  opacity: 0;
+  animation: scrollBounce 1.6s ease-in-out infinite;
+
+  &:nth-of-type(1) {
+    margin-top: 0;
+    animation-delay: 0s;
+  }
+  &:nth-of-type(2) {
+    animation-delay: 0.2s;
+  }
+  &:nth-of-type(3) {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes scrollBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.heroGroup {
+  position: relative;
+}
+
+.heroBadge {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 110px;
+}
+
+.marquee {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: var(--space-4) 0;
+  color: #fb8e71;
+  background: var(--color-primary-dark);
+
+  /* top border — radial gradient line */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: radial-gradient(circle, #ffa188 0%, #14004a 100%);
+  }
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 18s linear infinite;
+}
+
+.marqueeGroup {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  flex-shrink: 0;
+}
+
+.marqueeItem {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: var(--text-base);
+  font-weight: 600;
+  padding: 0 var(--space-5);
+
+  &::after {
+    content: "•";
+    margin-left: var(--space-5);
+    opacity: 0.5;
+  }
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

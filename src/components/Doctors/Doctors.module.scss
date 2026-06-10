@@ -1,0 +1,306 @@
+.doctors {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.doctorsTitle {
+  color: var(--Color-Text-Primary, #100e15);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.48px;
+  margin-bottom: 8px;
+}
+
+.doctorsSubtitle {
+  color: var(--Color-Text-Secondary, #686670);
+  text-align: center;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: var(--tracking-narrow, -0.12px);
+}
+
+/* ---- stack ---- */
+.stackWrap {
+  position: relative;
+  margin-top: 24px;
+  padding: 24px 16px 16px;
+  border: 1px solid #ece9f5;
+  border-radius: 24px;
+  background: linear-gradient(
+    to bottom,
+    #fff9f1 0%,
+    rgba(255, 249, 241, 0) 100%
+  );
+  box-shadow: 0 8px 30px rgba(25, 9, 64, 0.06);
+  overflow: hidden;
+
+  /* frosted blur fade along the bottom edge */
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 117px;
+    z-index: 20;
+    pointer-events: none;
+    background: radial-gradient(
+      145.75% 126.05% at 50.15% -26.05%,
+      rgba(255, 255, 255, 0) 20%,
+      #fff 85%
+    );
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 100%);
+  }
+}
+
+.consultPill {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 0px 0px 8px 8px;
+  border: 0.956px solid rgba(255, 172, 183, 0);
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
+    linear-gradient(
+      91deg,
+      rgba(15, 0, 69, 0.7) 1.64%,
+      rgba(98, 42, 253, 0.7) 99.27%
+    );
+  backdrop-filter: blur(21.036px);
+  color: var(--Color-buttons-Primary-Text, #fff);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.11px;
+  text-transform: lowercase;
+}
+
+.cardStack {
+  position: relative;
+  height: 140px;
+  margin-top: 48px;
+}
+
+.card {
+  position: absolute;
+  bottom: 0;
+  left: 6%;
+  width: 88%;
+  height: 140px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(25, 9, 64, 0.12);
+  transform-origin: center;
+  animation: stack-cycle 6s infinite;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 14px 0;
+}
+
+.offBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(90deg, #074c27 0%, #1eb865 100%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 0 16px 0 12px;
+}
+
+.bookedTag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg, var(--Sand-100, #fdf2e3) 0%, #fff 100%);
+  color: #686670;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 14px 0 8px 0;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.avatarWrap {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 8px 8px 0 0;
+  background: #ece7fb;
+  color: #714fff;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.yearsBadge {
+  width: 100%;
+  text-align: center;
+  background: linear-gradient(115deg, #714fff 7.48%, #442f99 94.62%);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 0 0 8px 8px;
+  white-space: nowrap;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cardName {
+  color: var(--Color-Text-Primary, #100e15);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 11.715px;
+  font-weight: 600;
+  line-height: 140%;
+  letter-spacing: 0.209px;
+}
+
+.specialty {
+  color: var(--Color-Text-Secondary, #686670);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 10.041px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.qualification {
+  color: var(--Color-Text-Secondary, #686670);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 10.041px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.clinic {
+  color: var(--Color-Text-Secondary, #686670);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 10.041px;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #f2f2f3;
+}
+
+.paidBy {
+  font-size: 12px;
+  font-weight: 600;
+  color: #686670;
+}
+
+.price {
+  font-size: 13px;
+  font-weight: 500;
+  color: #686670;
+}
+
+.priceOld {
+  color: #b3b1ba;
+}
+
+.priceNew {
+  font-size: 15px;
+  font-weight: 700;
+  color: #100e15;
+}
+
+.card:nth-child(1) {
+  animation-delay: 0s;
+}
+.card:nth-child(2) {
+  animation-delay: -2s;
+}
+.card:nth-child(3) {
+  animation-delay: -4s;
+}
+
+@keyframes stack-cycle {
+  /* front — big, on top */
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    z-index: 3;
+    opacity: 1;
+  }
+  /* slide down out the bottom while shrinking + fading out */
+  16.666% {
+    transform: translateY(24px) scale(0.7);
+    z-index: 4;
+    opacity: 0;
+  }
+  /* teleport below the back slot while invisible */
+  16.667% {
+    transform: translateY(10px) scale(0.84);
+    z-index: 1;
+    opacity: 0;
+  }
+  /* slide up + fade in — looks like it's inserted at the back */
+  33.333% {
+    transform: translateY(-44px) scale(0.84);
+    z-index: 1;
+    opacity: 1;
+  }
+  /* middle slot — peeks from the top */
+  66.666% {
+    transform: translateY(-22px) scale(0.92);
+    z-index: 2;
+    opacity: 1;
+  }
+}

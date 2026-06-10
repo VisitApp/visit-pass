@@ -1,30 +1,22 @@
-import Image from "next/image";
 import {
   FiCheckCircle,
   FiClock,
   FiCreditCard,
   FiMapPin,
-  FiStar,
 } from "react-icons/fi";
 import {
   CareCarousel,
   ClinicSection,
+  Doctors,
   FAQ,
-  HeroSlides,
+  Hero,
+  Membership,
   MedicineSavings,
-  Navbar,
   ScanCarousel,
   TestimonialCarousel,
 } from "@/components";
 import { clsx } from "@/utils/helpers";
-import {
-  careImages,
-  clinicFeatures,
-  doctors,
-  faqs,
-  testimonials,
-  tests,
-} from "@/constants";
+import { careImages, faqs, testimonials, tests } from "@/constants";
 
 const clinicIcons = {
   card: FiCreditCard,
@@ -38,71 +30,9 @@ export default function Home() {
   return (
     <div className={s.page}>
       <main className={s.main}>
-        <section className={s.hero}>
-          <Navbar logoSrc="/images/VisitLogo.webp" />
-          <div className={s.heroBody}>
-            <HeroSlides />
-            <Image
-              className={s.heroBadge}
-              src="/images/offer.png"
-              alt="OPD Pass Membership"
-              width={276}
-              height={48}
-              priority
-            />
-          </div>
-        </section>
-        <div className={s.marquee}>
-          <div className={s.marqueeTrack}>
-            {Array.from({ length: 2 }).map((_, copy) => (
-              <ul
-                className={s.marqueeGroup}
-                key={copy}
-                aria-hidden={copy === 1}
-              >
-                {["Consultation", "Lab Test", "Visit Clinic", "Cashless"].map(
-                  (item) => (
-                    <li key={item} className={s.marqueeItem}>
-                      {item}
-                    </li>
-                  ),
-                )}
-              </ul>
-            ))}
-          </div>
-        </div>
-        <section className={s.doctors}>
-          <h2 className={s.doctorsTitle}>
-            Meet our Doctors as many times as you need
-          </h2>
-          <p className={s.doctorsSubtitle}>
-            Unlock free unlimited doctor consultations and thorough lab tests
-            for the whole year
-          </p>
+        <Hero />
 
-          <div className={s.cardStack}>
-            {doctors.map((doc) => (
-              <article className={s.card} key={doc.name}>
-                <div className={s.cardTop}>
-                  <span className={s.avatar}>{doc.initials}</span>
-                  <div className={s.cardRating}>
-                    <FiStar aria-hidden="true" /> {doc.rating}
-                  </div>
-                </div>
-                <div className={s.cardBody}>
-                  <h3 className={s.cardName}>{doc.name}</h3>
-                  <p className={s.cardSpecialty}>
-                    {doc.specialty} · {doc.experience}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <ClinicSection />
-
-        <MedicineSavings />
+        <Doctors />
 
         <section className={s.savings}>
           <h2 className={s.sectionTitle}>
@@ -115,6 +45,10 @@ export default function Home() {
 
           <ScanCarousel items={tests} />
         </section>
+
+        <MedicineSavings />
+
+        <ClinicSection />
 
         <section className={s.savings}>
           <h2 className={s.sectionTitle}>
@@ -129,6 +63,8 @@ export default function Home() {
 
           <CareCarousel images={careImages} />
         </section>
+
+        <Membership />
 
         <section className={clsx(s.savings, s.faqSection)}>
           <h2 className={s.sectionTitle}>Testimonials</h2>
