@@ -1,0 +1,69 @@
+.section {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  background: #faf5ef;
+}
+
+.title {
+  color: var(--Color-Text-Primary, #100e15);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.48px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: var(--Color-Text-Secondary, #686670);
+  text-align: center;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: var(--tracking-narrow, -0.12px);
+  margin-bottom: 24px;
+}
+
+/* ---- carousel ---- */
+.carousel {
+  /* a little side room so the card's shadow isn't clipped */
+  padding: 0 4px;
+  margin-left: -20px;
+  margin-right: -20px;
+
+  /* smooth glide on each transition */
+  :global(.swiper-wrapper) {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* inset each slide's card 20px from the edges */
+  :global(.swiper-slide) {
+    padding: 0 20px;
+  }
+}
+
+/* dots rendered below the cards */
+.carousel :global(.swiper-pagination) {
+  position: static;
+  margin-top: 12px;
+}
+
+.carousel :global(.swiper-pagination-bullet) {
+  width: 6px;
+  height: 4px;
+  border-radius: 2px;
+  background: #e2d6c8;
+  opacity: 1;
+  transition:
+    width 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.carousel :global(.swiper-pagination-bullet-active) {
+  width: 20px;
+  border-radius: 4px;
+  background: #e6734d;
+}

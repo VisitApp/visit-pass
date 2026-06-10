@@ -3,11 +3,11 @@ import Calendar from "@/icons/Calendar.svg";
 import Clock from "@/icons/Clock.svg";
 import Discount from "@/icons/Discount.svg";
 import { benefits } from "@/constants";
-import s from "./ClinicSection.module.scss";
+import s from "./Clinic.module.scss";
 
 const benefitIcons = [Clock, Calendar, Discount];
 
-export default function ClinicSection() {
+export default function Clinic() {
   return (
     <section className={s.clinicSection}>
       <h2 className={s.title}>Access to Visit Clinic</h2>

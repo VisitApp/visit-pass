@@ -1,4 +1,4 @@
-import type { TestCardData } from "@/components/TestCard/TestCard";
+import type { TestCardData } from "@/components/common/TestCard/TestCard";
 
 /** Static content / data constants shared across the app. */
 

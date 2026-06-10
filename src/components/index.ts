@@ -1,15 +1,10 @@
-export { default as AuthGuard } from "./AuthGuard/AuthGuard";
-export { default as CareCarousel } from "./CareCarousel/CareCarousel";
-export { default as ClinicSection } from "./ClinicSection/ClinicSection";
-export { default as Doctors } from "./Doctors/Doctors";
-export { default as FAQ } from "./FAQ/FAQ";
-export { default as Hero } from "./Hero/Hero";
-export { default as GoldCard } from "./GoldCard/GoldCard";
-export { default as HeroSlides } from "./HeroSlides/HeroSlides";
-export { default as Membership } from "./Membership/Membership";
-export { default as MedicineSavings } from "./MedicineSavings/MedicineSavings";
-export { default as Navbar } from "./Navbar/Navbar";
-export { default as ScanCarousel } from "./ScanCarousel/ScanCarousel";
-export { default as TestCard } from "./TestCard/TestCard";
-export { default as Testimonial } from "./Testimonial/Testimonial";
-export { default as TestimonialCarousel } from "./TestimonialCarousel/TestimonialCarousel";
+export { default as AuthGuard } from "./common/AuthGuard/AuthGuard";
+export { default as FAQ } from "./common/FAQ/FAQ";
+export { default as Navbar } from "./common/Navbar/Navbar";
+export { default as TestCard } from "./common/TestCard/TestCard";
+export { default as Testimonial } from "./common/Testimonial/Testimonial";
+
+export { default as GoldCard } from "./common/GoldCard/GoldCard";
+
+// homepage section components
+export * from "./homepage";

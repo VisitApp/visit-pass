@@ -1,0 +1,113 @@
+.section {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: var(--Color-Text-Primary, #100e15);
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.48px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--Color-Text-Secondary, #686670);
+  text-align: center;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: var(--tracking-narrow, -0.12px);
+  margin-bottom: 24px;
+}
+
+.carouselWrap {
+  position: relative;
+}
+
+.offPill {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 0px 0px 8px 8px;
+  border: 0.956px solid rgba(255, 172, 183, 0);
+  background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 100%),
+    linear-gradient(
+      91deg,
+      rgba(15, 0, 69, 0.7) 1.64%,
+      rgba(98, 42, 253, 0.7) 99.27%
+    );
+  backdrop-filter: blur(21.036px);
+  color: var(--Color-buttons-Primary-Text, #fff);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 150%;
+  letter-spacing: -0.11px;
+  text-transform: lowercase;
+}
+
+/* ---- carousel ---- */
+.viewport {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    to bottom,
+    #fff9f1 0%,
+    rgba(255, 249, 241, 0) 100%
+  );
+
+  :global(.swiper) {
+    height: 100%;
+  }
+
+  :global(.swiper-wrapper) {
+    height: 100%;
+    align-items: center;
+  }
+
+  /* width wins over swiper/css's .swiper-slide{width:100%} via higher specificity */
+  :global(.swiper-slide) {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* the centered card grows above its neighbours, which tuck behind its edges */
+  :global(.swiper-slide-active) {
+    z-index: 2;
+  }
+
+  :global(.swiper-slide-active) .card {
+    transform: scale(1.5, 1.6667);
+    opacity: 1;
+  }
+}
+
+.card {
+  width: 120px;
+  height: 90px;
+  overflow: hidden;
+  opacity: 0.6;
+  transform-origin: center center;
+  transition:
+    transform 0.8s ease,
+    opacity 0.8s ease;
+}

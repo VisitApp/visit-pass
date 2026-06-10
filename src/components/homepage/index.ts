@@ -1,0 +1,9 @@
+export { default as Care } from "./Care/Care";
+export { default as Clinic } from "./Clinic/Clinic";
+export { default as Doctors } from "./Doctors/Doctors";
+export { default as FAQSection } from "./FAQSection/FAQSection";
+export { default as Hero } from "./Hero/Hero";
+export { default as Medicines } from "./Medicines/Medicines";
+export { default as Membership } from "./Membership/Membership";
+export { default as Testimonials } from "./Testimonials/Testimonials";
+export { default as TestsAndScans } from "./TestsAndScans/TestsAndScans";

@@ -1,4 +1,4 @@
-import GoldCard from "../GoldCard/GoldCard";
+import GoldCard from "../../common/GoldCard/GoldCard";
 import s from "./Membership.module.scss";
 
 export default function Membership() {

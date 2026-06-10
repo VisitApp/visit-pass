@@ -5,7 +5,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { products } from "@/constants";
 import { clsx } from "@/utils/helpers";
-import s from "./MedicineSavings.module.scss";
+import s from "./Medicines.module.scss";
 import "swiper/css";
 
 const tracks = [
@@ -17,7 +17,7 @@ const tracks = [
 // which loop mode requires to scroll continuously
 const trackProducts = [...products, ...products, ...products, ...products];
 
-export default function MedicineSavings() {
+export default function Medicines() {
   return (
     <section className={s.savings}>
       <h2 className={s.sectionTitle}>Smarter Savings on Medicines</h2>

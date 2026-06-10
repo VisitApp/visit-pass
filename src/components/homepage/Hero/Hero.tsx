@@ -1,17 +1,45 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import HeroSlides from "../HeroSlides/HeroSlides";
-import Navbar from "../Navbar/Navbar";
+import { HERO_SLIDES } from "@/constants";
+import Navbar from "../../common/Navbar/Navbar";
 import s from "./Hero.module.scss";
 
+/** ms each hero image stays before crossfading to the next */
+const SLIDE_INTERVAL = 2000;
+
 export default function Hero() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(
+      () => setActive((i) => (i + 1) % HERO_SLIDES.length),
+      SLIDE_INTERVAL,
+    );
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <div className={s.heroWrap}>
       <section className={s.hero}>
         <Navbar logoSrc="/images/VisitLogo.webp" />
         <div className={s.heroBody}>
           <div className={s.heroGroup}>
-            <HeroSlides />
+            <div className={s.slides}>
+              {HERO_SLIDES.map((src, i) => (
+                <Image
+                  key={src}
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="300px"
+                  priority={i === 0}
+                  className={`${s.slide} ${i === active ? s.active : ""}`}
+                />
+              ))}
+            </div>
             <Image
               className={s.heroBadge}
               src="/images/offer.png"
