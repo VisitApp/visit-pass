@@ -3,21 +3,43 @@
   margin: 20px auto;
   padding: 2px;
   background: linear-gradient(
-    to bottom,
-    #6330f8 0%,
-    #ffffff 42%,
-    #ffffff 55%,
+    120deg,
+    #ed825e 0%,
+    #ffffff 25%,
+    #f9c40c 50%,
+    #ffffff 75%,
     #ed825e 100%
   );
-  border-radius: 24px;
+  background-size: 200% 200%;
+  animation: goldBorderFlow 4s linear infinite;
+  border-radius: 12px;
   position: relative;
+}
+
+.selected {
+  box-shadow: 0 0 0 3px rgba(113, 79, 255, 0.45);
+}
+
+@keyframes goldBorderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .outerBorder {
+    animation: none;
+  }
 }
 
 .card {
   position: relative;
   height: 100%;
   background: #fff;
-  border-radius: 22px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow:
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
@@ -80,6 +102,7 @@
   font-size: 18px;
   font-weight: 900;
   letter-spacing: -0.02em;
+  text-transform: uppercase;
   background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
   background-clip: text;
   -webkit-background-clip: text;
@@ -183,6 +206,9 @@
   flex-direction: column;
   gap: 20px;
   padding: 0 8px;
+  background-color: #fdfaf6;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .benefit {

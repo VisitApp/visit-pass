@@ -1,0 +1,278 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ecebf1;
+  padding: var(--space-4);
+}
+
+.main {
+  width: 100%;
+  max-width: 440px;
+  height: calc(100dvh - 2 * var(--space-4));
+  max-height: 900px;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  box-shadow: 0 24px 70px rgba(16, 14, 21, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* success card */
+.successCard {
+  border: 1px solid #ecfdf5;
+  border-radius: 24px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.05),
+    0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+.checkCircle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #fff;
+  font-size: 34px;
+  margin-bottom: 24px;
+}
+
+.successTitle {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: #15803d;
+  margin-bottom: 10px;
+}
+
+.successText {
+  max-width: 280px;
+  margin: 0 auto;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #6b7280;
+
+  strong {
+    font-weight: 700;
+    color: #1e293b;
+  }
+}
+
+/* pass card */
+.passCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  margin-top: 28px;
+  padding: 24px;
+  text-align: left;
+  aspect-ratio: 1.6 / 1;
+  background: url("/images/GoldCardBg.png") center center / cover no-repeat;
+  box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.3);
+}
+
+.passGlow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  pointer-events: none;
+  background: radial-gradient(circle at top right, #fff, transparent 55%);
+}
+
+.passInner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+}
+
+.goldTag {
+  display: inline-block;
+  background: linear-gradient(
+    to right,
+    #f9c40c 0%,
+    #fdf76d 33%,
+    #dd9900 67%,
+    #ffd600 100%
+  );
+  color: #713f12;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.passTitle {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.passMembers {
+  color: #c7d2fe;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.passValidity {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: #c7d2fe;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* order summary */
+.summaryCard {
+  border: 1px solid #f3f4f6;
+  border-radius: 24px;
+  padding: 22px;
+  background: #fff;
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.05),
+    0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+.summaryHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.summaryHeadLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summaryTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.summaryIcon {
+  width: 20px;
+  height: 20px;
+  color: #475569;
+}
+
+.invoice {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6366f1;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rowLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.rowValue {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.rowValueUpper {
+  text-transform: uppercase;
+}
+
+.amountRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.amountLabel {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.amountValue {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+/* footer */
+.footer {
+  flex-shrink: 0;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid #f2f2f3;
+}
+
+.cta {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: #6366f1;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #4f46e5;
+  }
+}

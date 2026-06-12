@@ -44,11 +44,33 @@ const benefits: Benefit[] = [
   },
 ];
 
+import { clsx } from "@/utils/helpers";
 import s from "./GoldCard.module.scss";
 
-export default function GoldCard() {
+type GoldCardProps = {
+  name?: string;
+  /** badge text shown next to the name, e.g. "GOLD" */
+  badge?: string;
+  /** formatted price, e.g. "₹2900" */
+  price?: string;
+  selected?: boolean;
+  onClick?: () => void;
+};
+
+export default function GoldCard({
+  name = "OPD PASS",
+  badge = "GOLD",
+  price,
+  selected,
+  onClick,
+}: GoldCardProps) {
   return (
-    <div className={s.outerBorder}>
+    <div
+      className={clsx(s.outerBorder, selected && s.selected)}
+      onClick={onClick}
+      role={onClick ? "button" : undefined}
+      tabIndex={onClick ? 0 : undefined}
+    >
       <div className={s.badge}>Top family pick</div>
       <div className={s.card}>
         <div className={s.content}>
@@ -56,18 +78,20 @@ export default function GoldCard() {
             <div className={s.headerGlow} aria-hidden="true" />
             <div className={s.headerInner}>
               <div className={s.titleRow}>
-                <h1 className={s.title}>OPD PASS</h1>
-                <span className={s.goldTag}>GOLD</span>
+                <h1 className={s.title}>{name}</h1>
+                <span className={s.goldTag}>{badge}</span>
               </div>
               <p className={s.tagline}>Consultation • Lab Test • Pharmacy</p>
-              <div className={s.priceBlock}>
-                <p className={s.startingAt}>starting at</p>
-                <div className={s.priceRow}>
-                  <span className={s.price}>₹2900</span>
-                  <span className={s.per}>/year</span>
+              {price && (
+                <div className={s.priceBlock}>
+                  <p className={s.startingAt}>starting at</p>
+                  <div className={s.priceRow}>
+                    <span className={s.price}>{price}</span>
+                    <span className={s.per}>/year</span>
+                  </div>
+                  <p className={s.billed}>billed annually</p>
                 </div>
-                <p className={s.billed}>billed annually</p>
-              </div>
+              )}
             </div>
           </header>
 

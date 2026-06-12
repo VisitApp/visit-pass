@@ -1,0 +1,149 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ecebf1;
+  padding: var(--space-4);
+}
+
+.main {
+  width: 100%;
+  max-width: 440px;
+  height: calc(100dvh - 2 * var(--space-4));
+  max-height: 900px;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow: 0 24px 70px rgba(16, 14, 21, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.heading {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 130%;
+  letter-spacing: -0.4px;
+  color: #222226;
+  margin: 16px 0 4px;
+}
+
+.lead {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 150%;
+  color: #686670;
+  margin-bottom: 16px;
+}
+
+.sectionLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #686670;
+  margin: 24px 0 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: #1eb865;
+  margin-top: 1px;
+}
+
+.rowTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222226;
+}
+
+.rowSub {
+  font-size: 12px;
+  font-weight: 500;
+  color: #686670;
+}
+
+.note {
+  margin-top: 24px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #fdf2e3;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 150%;
+  color: #754100;
+}
+
+/* sticky CTA footer */
+.footer {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  border-top: 1px solid #f2f2f3;
+  background: #fff;
+}
+
+.cta {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 14px;
+  background: #714fff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #5f3fe0;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.state {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #686670;
+}
+
+.footerError {
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e3342f;
+}

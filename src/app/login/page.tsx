@@ -3,29 +3,13 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { identifyUser, verifyOtp as verifyOtpApi } from "@/services";
+import { TOKEN_KEY, USER_KEY } from "@/utils/cart";
 import s from "./login.module.scss";
 
 const OTP_LENGTH = 4;
-const API_BASE =
-  "https://enrolment-portal.getvisitapp.net/optin/opt-in/visitapp";
 const CORPORATE_ID = 217;
 const CORPORATE_NAME = "Visit OPD";
-const TOKEN_KEY = "opd_auth_token";
-const USER_KEY = "opd_user_info";
-
-type UserInfo = {
-  userId: number;
-  isNewUser?: boolean;
-  enrolmentCompleted?: boolean;
-  visitPaymentMade?: boolean;
-};
-
-type ApiResponse = {
-  userInfo?: UserInfo;
-  authToken?: string;
-  errorMessage?: string;
-  message?: string;
-};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -56,36 +40,25 @@ export default function LoginPage() {
     if (!phoneValid || loading) return;
     setLoading(true);
     setError("");
-    try {
-      const res = await fetch(`${API_BASE}/identify-user`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone,
-          corporateId: CORPORATE_ID,
-          corporateName: CORPORATE_NAME,
-        }),
-      });
-      const data: ApiResponse = await res.json();
-      if (!res.ok || !data.userInfo) {
-        throw new Error(
-          data.errorMessage || data.message || "Something went wrong",
-        );
-      }
-      if (data.userInfo.enrolmentCompleted) {
-        setStep("submitted");
-        return;
-      }
-      setUserId(data.userInfo.userId);
-      setOtp(Array(OTP_LENGTH).fill(""));
-      setStep("otp");
-      setResendTimer(25);
-      requestAnimationFrame(() => otpRefs.current[0]?.focus());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+    const res = await identifyUser({
+      phone,
+      corporateId: CORPORATE_ID,
+      corporateName: CORPORATE_NAME,
+    });
+    setLoading(false);
+    if (!res.ok || !res.userInfo) {
+      setError(res.error || "Something went wrong");
+      return;
     }
+    if (res.userInfo.enrolmentCompleted) {
+      setStep("submitted");
+      return;
+    }
+    setUserId(res.userInfo.userId);
+    setOtp(Array(OTP_LENGTH).fill(""));
+    setStep("otp");
+    setResendTimer(25);
+    requestAnimationFrame(() => otpRefs.current[0]?.focus());
   }
 
   function handleOtpChange(index: number, value: string) {
@@ -127,27 +100,17 @@ export default function LoginPage() {
     if (!otpValid || userId == null || loading) return;
     setLoading(true);
     setError("");
-    try {
-      const res = await fetch(`${API_BASE}/verify-otp`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, otp: otp.join(""), phone }),
-      });
-      const data: ApiResponse = await res.json();
-      const token = data.authToken || res.headers.get("Authorization") || "";
-      if (!res.ok || !token) {
-        throw new Error(data.errorMessage || data.message || "Invalid OTP");
-      }
-      sessionStorage.setItem(TOKEN_KEY, token);
-      if (data.userInfo) {
-        sessionStorage.setItem(USER_KEY, JSON.stringify(data.userInfo));
-      }
-      router.push("/");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Invalid OTP");
-    } finally {
-      setLoading(false);
+    const res = await verifyOtpApi({ userId, otp: otp.join(""), phone });
+    setLoading(false);
+    if (!res.ok || !res.token) {
+      setError(res.error || "Invalid OTP");
+      return;
     }
+    sessionStorage.setItem(TOKEN_KEY, res.token);
+    if (res.userInfo) {
+      sessionStorage.setItem(USER_KEY, JSON.stringify(res.userInfo));
+    }
+    router.push("/");
   }
 
   return (

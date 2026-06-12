@@ -1,0 +1,370 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ecebf1;
+  padding: var(--space-4);
+}
+
+.main {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: calc(100dvh - 2 * var(--space-4));
+  max-height: 900px;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow: 0 24px 70px rgba(16, 14, 21, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.progress {
+  height: 6px;
+  margin: 4px 20px 0;
+  border-radius: 999px;
+  background: #ece9f2;
+  overflow: hidden;
+}
+
+.progressFill {
+  display: block;
+  width: 66%;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #4c1d95 0%, #714fff 100%);
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.sectionTitle {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #100e15;
+  margin-bottom: 12px;
+}
+
+/* pass card */
+.passWrap {
+  padding: 12px;
+  border-radius: 20px;
+  background: #fdf6ee;
+  margin-bottom: 28px;
+}
+
+.passCard {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: 20px;
+  color: #fff;
+  background: url("/images/GoldCardBg.png") center center / cover no-repeat;
+}
+
+.passGlow {
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background: radial-gradient(circle at top right, #fff, transparent 60%);
+}
+
+.passInner {
+  position: relative;
+  z-index: 1;
+}
+
+.goldTag {
+  display: inline-block;
+  background: linear-gradient(
+    to right,
+    #f9c40c 0%,
+    #fdf76d 33%,
+    #dd9900 67%,
+    #ffd600 100%
+  );
+  color: #754100;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.passTitle {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.passMembers {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.9;
+  margin-bottom: 28px;
+}
+
+.passPriceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.passPrice {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.passPer {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+.passBilled {
+  font-size: 12px;
+  color: #fff;
+  margin-top: 2px;
+}
+
+/* members covered */
+.coveredLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #100e15;
+  margin: 16px 0 12px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 6px;
+  border: 1px solid #ece9f2;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.chipAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chipLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222226;
+}
+
+/* coupon */
+.coupon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ece9f2;
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+
+.couponIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f1ecff;
+  color: #714fff;
+}
+
+.couponBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.couponTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222226;
+}
+
+.couponSub {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1eb865;
+}
+
+.couponChevron {
+  flex-shrink: 0;
+  color: #9ca3af;
+}
+
+/* price breakdown */
+.divider {
+  height: 1px;
+  background: #f2f2f3;
+  margin: 24px 0 16px;
+}
+
+.priceRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #222226;
+}
+
+.priceRowDiscount {
+  color: #1eb865;
+}
+
+.priceRowTotal {
+  border-top: 1px solid #f2f2f3;
+  padding-top: 12px;
+  font-weight: 700;
+  color: #100e15;
+}
+
+.priceRowLabelMuted {
+  color: #686670;
+}
+
+/* order-confirmed success header */
+.confirmed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px 0 20px;
+}
+
+.confirmedIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #1eb865;
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+
+.confirmedTitle {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: #100e15;
+  margin-bottom: 4px;
+}
+
+.confirmedSub {
+  font-size: 14px;
+  font-weight: 500;
+  color: #686670;
+}
+
+/* footer */
+.savingsBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #e8f6ff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a4d66;
+
+  strong {
+    font-weight: 700;
+    color: #0f3d52;
+  }
+}
+
+.savingsIcon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  padding: 3px;
+  border-radius: 50%;
+  background: #1eb865;
+  color: #fff;
+}
+
+.footer {
+  flex-shrink: 0;
+  padding: 12px 20px 16px;
+  background: #fff;
+}
+
+.cta {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: #714fff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #5f3fe0;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.footerError {
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e3342f;
+}

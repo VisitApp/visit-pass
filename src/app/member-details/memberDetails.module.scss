@@ -1,0 +1,152 @@
+.page {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ecebf1;
+  padding: var(--space-4);
+}
+
+.main {
+  width: 100%;
+  max-width: 440px;
+  height: calc(100dvh - 2 * var(--space-4));
+  max-height: 900px;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  background: var(--background);
+  box-shadow: 0 24px 70px rgba(16, 14, 21, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.heading {
+  font-family: var(--font-bricolage), var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: #100e15;
+  margin-bottom: 4px;
+}
+
+.lead {
+  font-size: 14px;
+  font-weight: 500;
+  color: #686670;
+  margin-bottom: 20px;
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #9ca3af;
+}
+
+.card {
+  padding: 16px;
+  margin-bottom: 14px;
+  border: 1px solid #ece9f2;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.relation {
+  font-size: 14px;
+  font-weight: 700;
+  color: #222226;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #686670;
+  margin-bottom: 6px;
+}
+
+.field {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  margin-bottom: 12px;
+  border: 1px solid #e5e4e7;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  color: #222226;
+  outline: none;
+  transition: border-color 0.15s ease;
+
+  &:focus {
+    border-color: #8b5cf6;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.footer {
+  flex-shrink: 0;
+  padding: 12px 20px 16px;
+  background: #fff;
+  border-top: 1px solid #f2f2f3;
+}
+
+.footerError {
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #e3342f;
+}
+
+.cta {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: #714fff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: #5f3fe0;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}

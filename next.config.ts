@@ -10,6 +10,20 @@ const nextConfig: NextConfig = {
   // Emit /route/index.html so S3 website routing resolves cleanly
   trailingSlash: true,
 
+  // Dev-only proxy to dodge CORS while testing locally (no server in prod export).
+  // Prod hits the API directly → backend must send Access-Control-Allow-Origin.
+  ...(isDev && {
+    async rewrites() {
+      return [
+        {
+          source: "/proxy/:path*",
+          destination:
+            "https://enrolment-portal.getvisitapp.net/optin/opt-in/visitapp/:path*",
+        },
+      ];
+    },
+  }),
+
   // LocatorJS: Option+click any element in the browser to jump to its source.
   // Dev-only — never inject into the production export shipped to S3.
   ...(isDev && {
