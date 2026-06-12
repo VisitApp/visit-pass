@@ -1,0 +1,22 @@
+.strip {
+  flex-shrink: 0;
+  padding: 12px 20px 16px;
+  background: #fff;
+}
+
+.cta {
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 14px;
+  background: #714fff;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #5f3fe0;
+  }
+}

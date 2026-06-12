@@ -166,6 +166,7 @@ export async function getCartSummary(): Promise<{
     return {
       ok: true,
       data: {
+        usersDetails: data.usersDetails ?? null,
         selectedMembers: data.selectedMembers ?? [],
         selectedOpdPlan: data.selectedOpdPlan ?? null,
         coupons: data.coupons ?? [],

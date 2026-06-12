@@ -1,4 +1,5 @@
 import {
+  BottomStrip,
   Care,
   Clinic,
   Doctors,
@@ -24,6 +25,7 @@ export default function Home() {
         <Membership />
         <Testimonials />
         <FAQSection />
+        <BottomStrip />
       </main>
     </div>
   );

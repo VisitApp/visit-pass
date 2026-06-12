@@ -11,12 +11,7 @@ import {
   saveCart,
   transactUrl,
 } from "@/services";
-import {
-  COVER_VARIANT_KEY,
-  getUserId,
-  keyForMember,
-  RELATION_META,
-} from "@/utils/cart";
+import { COVER_VARIANT_KEY, keyForMember, RELATION_META } from "@/utils/cart";
 import ApplyCouponModal from "./ApplyCouponModal";
 import s from "./orderReview.module.scss";
 
@@ -76,7 +71,7 @@ export default function OrderReviewPage() {
       setPayError(res.error || "Couldn't start payment");
       return;
     }
-    const userId = getUserId();
+    const userId = summary?.usersDetails?.userId;
     if (!userId) {
       router.replace("/login");
       return;

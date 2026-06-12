@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components";
@@ -9,7 +8,12 @@ import {
   type SelectedMember,
   updateDependentDetails,
 } from "@/services";
-import { COVER_VARIANT_KEY, keyForMember, RELATION_META } from "@/utils/cart";
+import {
+  COVER_VARIANT_KEY,
+  keyForMember,
+  MEMBERS_KEY,
+  RELATION_META,
+} from "@/utils/cart";
 import s from "./memberDetails.module.scss";
 
 const meta = (relationId: number | null) =>
@@ -18,16 +22,45 @@ const meta = (relationId: number | null) =>
     img: "/relations/Self.png",
   };
 
-type Form = { name: string; dob: string };
+type Form = { name: string; dob: string; gender: string };
+
+const isSelf = (m: SelectedMember) => keyForMember(m.relationId) === "self";
 
 export default function MemberDetailsPage() {
   const router = useRouter();
   const [members, setMembers] = useState<SelectedMember[]>([]);
+  // Keyed by index so the self row (dependentId null) gets its own slot.
   const [forms, setForms] = useState<Record<number, Form>>({});
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const initForms = (list: SelectedMember[]) => {
+      setMembers(list);
+      setForms(
+        Object.fromEntries(
+          list.map((m, i) => [
+            i,
+            { name: m.name ?? "", dob: m.dob ?? "", gender: "" },
+          ]),
+        ),
+      );
+    };
+
+    // Prefer the members passed from order-confirmed; only fetch if absent.
+    const passed = sessionStorage.getItem(MEMBERS_KEY);
+    if (passed) {
+      try {
+        const list = JSON.parse(passed) as SelectedMember[];
+        if (list.length > 0) {
+          initForms(list);
+          return;
+        }
+      } catch {
+        /* malformed — fall through to fetch */
+      }
+    }
+
     const cv = Number(sessionStorage.getItem(COVER_VARIANT_KEY) || 0);
     if (!cv) {
       router.replace("/details");
@@ -40,36 +73,31 @@ export default function MemberDetailsPage() {
         return;
       }
       if (!res.ok || !res.data) return;
-      const dependents = res.data.selectedMembers.filter(
-        (m) => m.dependentId != null,
-      );
-      setMembers(dependents);
-      setForms(
-        Object.fromEntries(
-          dependents.map((m) => [m.dependentId, { name: "", dob: "" }]),
-        ),
-      );
+      initForms(res.data.selectedMembers);
     })();
   }, [router]);
 
-  const setField = (id: number, key: keyof Form, value: string) =>
-    setForms((prev) => ({ ...prev, [id]: { ...prev[id], [key]: value } }));
+  const setField = (i: number, key: keyof Form, value: string) =>
+    setForms((prev) => ({ ...prev, [i]: { ...prev[i], [key]: value } }));
 
   const allFilled =
     members.length > 0 &&
-    members.every((m) => {
-      const f = forms[m.dependentId as number];
-      return f && f.name.trim() !== "" && f.dob !== "";
+    members.every((m, i) => {
+      const f = forms[i];
+      if (!f || f.name.trim() === "" || f.dob === "") return false;
+      if (isSelf(m) && f.gender === "") return false;
+      return true;
     });
 
   async function handleSubmit() {
     if (!allFilled || submitting) return;
     setSubmitting(true);
     setError("");
-    const payload = members.map((m) => ({
-      dependentId: m.dependentId as number,
-      name: forms[m.dependentId as number].name.trim(),
-      dob: forms[m.dependentId as number].dob,
+    const payload = members.map((m, i) => ({
+      dependentId: m.dependentId,
+      name: forms[i].name.trim(),
+      dob: forms[i].dob,
+      ...(isSelf(m) ? { gender: forms[i].gender } : {}),
     }));
     const result = await updateDependentDetails(payload);
     setSubmitting(false);
@@ -81,7 +109,8 @@ export default function MemberDetailsPage() {
       setError(result.error || "Couldn't save details");
       return;
     }
-    router.push("/");
+    sessionStorage.removeItem(MEMBERS_KEY);
+    router.push(`/activated?members=${payload.length}`);
   }
 
   return (
@@ -91,45 +120,56 @@ export default function MemberDetailsPage() {
 
         <div className={s.scroll}>
           <h1 className={s.heading}>Add member details</h1>
-          <p className={s.lead}>
-            Enter the name and date of birth for each member to activate their
-            cover.
-          </p>
+          <p className={s.lead}>All fields are mandatory</p>
 
           {members.length === 0 ? (
             <p className={s.empty}>No members to add details for.</p>
           ) : (
-            members.map((m) => {
-              const id = m.dependentId as number;
+            members.map((m, i) => {
               const info = meta(m.relationId);
-              const f = forms[id] ?? { name: "", dob: "" };
+              const f = forms[i] ?? { name: "", dob: "" };
               return (
-                <div className={s.card} key={id}>
-                  <div className={s.cardHead}>
-                    <Image
-                      className={s.avatar}
-                      src={info.img}
-                      alt=""
-                      width={36}
-                      height={36}
-                    />
-                    <span className={s.relation}>{info.label}</span>
+                <div className={s.card} key={i}>
+                  <span className={s.relation}>{info.label}</span>
+                  <div className={s.fields}>
+                    <div className={s.inputWrapper}>
+                      <input
+                        className={s.field}
+                        type="text"
+                        placeholder="Full name"
+                        aria-label="Full name"
+                        value={f.name}
+                        onChange={(e) => setField(i, "name", e.target.value)}
+                      />
+                    </div>
+                    <div className={s.inputWrapper}>
+                      <input
+                        className={s.field}
+                        type="date"
+                        aria-label="Date of birth"
+                        value={f.dob}
+                        onChange={(e) => setField(i, "dob", e.target.value)}
+                      />
+                    </div>
+                    {isSelf(m) && (
+                      <div className={s.inputWrapper}>
+                        <select
+                          className={s.field}
+                          aria-label="Gender"
+                          value={f.gender}
+                          onChange={(e) =>
+                            setField(i, "gender", e.target.value)
+                          }
+                        >
+                          <option value="" disabled>
+                            Gender
+                          </option>
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                        </select>
+                      </div>
+                    )}
                   </div>
-                  <label className={s.fieldLabel}>Full name</label>
-                  <input
-                    className={s.field}
-                    type="text"
-                    placeholder="Full name"
-                    value={f.name}
-                    onChange={(e) => setField(id, "name", e.target.value)}
-                  />
-                  <label className={s.fieldLabel}>Date of birth</label>
-                  <input
-                    className={s.field}
-                    type="date"
-                    value={f.dob}
-                    onChange={(e) => setField(id, "dob", e.target.value)}
-                  />
                 </div>
               );
             })

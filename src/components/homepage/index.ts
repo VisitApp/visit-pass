@@ -1,3 +1,4 @@
+export { default as BottomStrip } from "./BottomStrip/BottomStrip";
 export { default as Care } from "./Care/Care";
 export { default as Clinic } from "./Clinic/Clinic";
 export { default as Doctors } from "./Doctors/Doctors";

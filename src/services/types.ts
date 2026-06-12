@@ -29,9 +29,12 @@ export type Pricing = {
 };
 
 export type DependentDetail = {
-  dependentId: number;
+  // null for the self (primary) row, which has no dependentId
+  dependentId: number | null;
   name: string;
   dob: string;
+  // collected for gender-ambiguous rows (self, spouse); null otherwise
+  gender?: string | null;
 };
 
 export type CartPlan = {
@@ -49,6 +52,7 @@ export type Coupon = {
 };
 
 export type CartSummary = {
+  usersDetails: { userId: number; name?: string } | null;
   selectedMembers: SelectedMember[];
   selectedOpdPlan: CartPlan | null;
   coupons: Coupon[];

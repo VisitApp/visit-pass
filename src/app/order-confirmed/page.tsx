@@ -1,33 +1,58 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { FiCheck, FiDownload, FiFileText } from "react-icons/fi";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { Navbar } from "@/components";
-import { getCartPricing } from "@/services";
-import { COVER_VARIANT_KEY } from "@/utils/cart";
+import PaymentDone from "@/icons/PaymentDone.svg";
+import Receipt from "@/icons/receipt.svg";
+import { getCartPricing, getCartSummary } from "@/services";
+import { COVER_VARIANT_KEY, MEMBERS_KEY, TOKEN_KEY } from "@/utils/cart";
 import s from "./orderConfirmed.module.scss";
 
 const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
-export default function OrderConfirmedPage() {
+function OrderConfirmed() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [totalMembers, setTotalMembers] = useState(0);
   const [amountPaid, setAmountPaid] = useState(0);
   const [purchaseDate, setPurchaseDate] = useState("");
   const [validity, setValidity] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const cv = Number(sessionStorage.getItem(COVER_VARIANT_KEY) || 0);
-    if (cv) {
-      (async () => {
+    // Payment gateway redirects here with the auth token in the URL.
+    // Persist it so AuthGuard and the pricing API can use it.
+    const urlToken = searchParams.get("token");
+    if (urlToken) {
+      sessionStorage.setItem(TOKEN_KEY, urlToken);
+    }
+
+    (async () => {
+      const summary = await getCartSummary();
+      console.log("cart-summary:", summary);
+
+      // Carry the members forward (incl. self) so member-details renders from
+      // these instead of refetching.
+      if (summary.ok && summary.data) {
+        sessionStorage.setItem(
+          MEMBERS_KEY,
+          JSON.stringify(summary.data.selectedMembers),
+        );
+      }
+
+      const cv = Number(sessionStorage.getItem(COVER_VARIANT_KEY) || 0);
+      if (cv) {
         const res = await getCartPricing(cv);
         if (res.ok && res.data) {
           setTotalMembers(res.data.selectedMembers.length);
           setAmountPaid(res.data.finalCost);
         }
-      })();
-    }
+      }
+      setLoading(false);
+    })();
+
     const now = new Date();
     const valid = new Date(now);
     valid.setFullYear(valid.getFullYear() + 1);
@@ -45,17 +70,25 @@ export default function OrderConfirmedPage() {
         year: "numeric",
       }),
     );
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className={s.page}>
       <main className={s.main}>
-        <Navbar title="Booking Confirmation" />
+        {loading && (
+          <div className={s.loaderOverlay}>
+            <span className={s.spinner} aria-label="Loading" role="status" />
+          </div>
+        )}
         <div className={s.scroll}>
           <section className={s.successCard}>
-            <span className={s.checkCircle}>
-              <FiCheck aria-hidden="true" />
-            </span>
+            <Image
+              className={s.checkCircle}
+              src={PaymentDone}
+              alt="Payment successful"
+              width={80}
+              height={80}
+            />
             <h1 className={s.successTitle}>Payment Successful!</h1>
             <p className={s.successText}>
               Your <strong>OPD Pass</strong> is almost ready, fill the members
@@ -76,13 +109,15 @@ export default function OrderConfirmedPage() {
           <section className={s.summaryCard}>
             <div className={s.summaryHead}>
               <div className={s.summaryHeadLeft}>
-                <FiFileText className={s.summaryIcon} aria-hidden="true" />
+                <Image
+                  className={s.summaryIcon}
+                  src={Receipt}
+                  alt=""
+                  width={20}
+                  height={20}
+                />
                 <h3 className={s.summaryTitle}>Order Summary</h3>
               </div>
-              <button type="button" className={s.invoice}>
-                Download Invoice
-                <FiDownload aria-hidden="true" />
-              </button>
             </div>
 
             <div className={s.rows}>
@@ -118,5 +153,13 @@ export default function OrderConfirmedPage() {
         </footer>
       </main>
     </div>
+  );
+}
+
+export default function OrderConfirmedPage() {
+  return (
+    <Suspense fallback={null}>
+      <OrderConfirmed />
+    </Suspense>
   );
 }

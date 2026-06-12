@@ -240,6 +240,24 @@ const deployProject = async (projectConfig: ProjectConfig): Promise<void> => {
             ...(useAcl ? { ACL: "public-read" as const } : {}),
           }),
         );
+
+        // `trailingSlash: true` emits `<route>/index.html`, so S3 only resolves
+        // deep links that end in a slash. Payment redirects hit `/order-confirmed`
+        // (no slash) → 404 → error doc (homepage). Mirror each nested
+        // `<route>/index.html` to an extensionless `<route>` object so the
+        // slash-less URL resolves to the same HTML.
+        if (relKey.endsWith("/index.html")) {
+          await s3.send(
+            new PutObjectCommand({
+              Bucket: bucket,
+              Key: `${keyPrefix}/${relKey.slice(0, -"/index.html".length)}`,
+              Body: fs.readFileSync(absoluteFilePath),
+              ContentType: "text/html; charset=utf-8",
+              CacheControl: "no-cache, no-store, must-revalidate",
+              ...(useAcl ? { ACL: "public-read" as const } : {}),
+            }),
+          );
+        }
       }
       done += 1;
       process.stdout.write(`\r  uploaded ${done}/${files.length}`);

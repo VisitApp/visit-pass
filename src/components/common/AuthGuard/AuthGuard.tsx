@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const TOKEN_KEY = "opd_auth_token";
 /** Paths reachable without a token. */
-const PUBLIC_PATHS = ["/login"];
+const PUBLIC_PATHS = ["/login", "/order-confirmed"];
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
