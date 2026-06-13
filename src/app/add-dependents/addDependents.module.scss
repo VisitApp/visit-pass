@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   background: #ecebf1;
-  padding: var(--space-4);
 }
 
 .main {
@@ -19,6 +18,40 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+
+.loaderOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249, 250, 251, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.spinner {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(113, 79, 255, 0) 0deg,
+    #714fff 300deg,
+    #4c1d95 360deg
+  );
+  mask: radial-gradient(farthest-side, transparent 62%, #000 64%);
+  -webkit-mask: radial-gradient(farthest-side, transparent 62%, #000 64%);
+  animation: spin 0.9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  filter: drop-shadow(0 0 8px rgba(113, 79, 255, 0.5));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* toast */

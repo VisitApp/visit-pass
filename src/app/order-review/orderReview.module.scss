@@ -22,8 +22,41 @@
   overflow: hidden;
 }
 
+.loaderOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249, 250, 251, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.spinner {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(113, 79, 255, 0) 0deg,
+    #714fff 300deg,
+    #4c1d95 360deg
+  );
+  mask: radial-gradient(farthest-side, transparent 62%, #000 64%);
+  -webkit-mask: radial-gradient(farthest-side, transparent 62%, #000 64%);
+  animation: spin 0.9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  filter: drop-shadow(0 0 8px rgba(113, 79, 255, 0.5));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .progress {
-  margin: 4px 20px 0;
+  margin: 0 0 16px;
 }
 
 .scroll {
@@ -38,25 +71,25 @@
 }
 
 .sectionTitle {
-  font-family: var(--font-bricolage), var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
   color: #100e15;
+  font-size: 14px;
+  font-weight: 600;
   margin-bottom: 12px;
 }
 
 /* pass card */
 .passWrap {
-  padding: 12px;
-  border-radius: 20px;
-  background: #fdf6ee;
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #fff 2.53%, #fff8f0 99.97%);
+  border: 1px solid #e3c396;
   margin-bottom: 28px;
 }
 
 .passCard {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 20.5px;
   padding: 20px;
   color: #fff;
   background: url("/images/GoldCardBg.png") center center / cover no-repeat;
@@ -92,15 +125,19 @@
 }
 
 .passTitle {
-  font-family: var(--font-bricolage), var(--font-display);
-  font-size: 22px;
-  font-weight: 900;
-  text-transform: uppercase;
-  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  font-family: "Bricolage Grotesque";
+  font-size: 18px;
+
+  font-weight: 700;
+
+  background: linear-gradient(
+    96deg,
+    var(--Warning-50, #fffbeb) -2.62%,
+    #fcde64 83.9%
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent;
 }
 
 .passMembers {
@@ -130,6 +167,9 @@
 .passPer {
   font-size: 14px;
   opacity: 0.85;
+  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .passBilled {
@@ -140,10 +180,12 @@
 
 /* members covered */
 .coveredLabel {
-  font-size: 14px;
-  font-weight: 700;
   color: #100e15;
-  margin: 16px 0 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 12px;
 }
 
 .chips {
@@ -158,8 +200,9 @@
   gap: 8px;
   padding: 6px 12px 6px 6px;
   border: 1px solid #ece9f2;
-  border-radius: 999px;
+  border-radius: 10px;
   background: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .chipAvatar {
@@ -167,6 +210,8 @@
   height: 24px;
   border-radius: 50%;
   object-fit: cover;
+  padding: 4px;
+  background: #f2f2f3;
 }
 
 .chipLabel {
@@ -182,9 +227,13 @@
   gap: 12px;
   width: 100%;
   padding: 14px;
-  border: 1px solid #ece9f2;
-  border-radius: 14px;
-  background: #fff;
+  border-radius: 16px;
+  border: 1px solid var(--Color-Border-Subtle, #f2f2f3);
+  background: linear-gradient(
+    90deg,
+    var(--Primary-50, #f5f2ff) 3.36%,
+    #fff 100%
+  );
   cursor: pointer;
   text-align: left;
 }
@@ -196,8 +245,7 @@
   flex-shrink: 0;
   width: 36px;
   height: 36px;
-  border-radius: 10px;
-  background: #f1ecff;
+  background: url("/images/CouponSeal.svg") center center / contain no-repeat;
   color: #714fff;
 }
 
@@ -237,9 +285,21 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
-  font-size: 14px;
+  color: #0f0b28;
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 12px;
+  font-style: normal;
   font-weight: 500;
-  color: #222226;
+  line-height: 150%;
+}
+
+.priceRowFirst {
+  margin: 24px -20px 12px;
+  border-top: 10px solid #fafafa;
+  padding: 24px 20px 0;
 }
 
 .priceRowDiscount {
@@ -255,6 +315,35 @@
 
 .priceRowLabelMuted {
   color: #686670;
+}
+
+.priceRowTotalCost {
+  border-top: none;
+  padding-top: 0;
+}
+
+.priceRowTotalCost span {
+  color: #0f0b28;
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.priceRowYouPay span {
+  color: var(--Primary-Text-New, #0f0b28);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
 }
 
 /* order-confirmed success header */

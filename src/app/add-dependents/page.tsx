@@ -91,6 +91,7 @@ function AddDependents() {
   const [pricing, setPricing] = useState<Pricing | null>(null);
   const [members, setMembers] = useState<SelectedMember[]>([]);
   const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
   const loaded = useRef(false);
 
   /** apply a pricing response: sync members, counts, pricing, storage */
@@ -115,6 +116,7 @@ function AddDependents() {
         return;
       }
       if (res.ok && res.data) applyPricing(res.data);
+      setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
@@ -313,6 +315,11 @@ function AddDependents() {
   return (
     <div className={s.page}>
       <main className={s.main}>
+        {(loading || busy) && (
+          <div className={s.loaderOverlay}>
+            <span className={s.spinner} aria-label="Loading" role="status" />
+          </div>
+        )}
         {toast && <div className={s.toast}>{toast}</div>}
         <Navbar title="Add Members" />
 

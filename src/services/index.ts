@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getUserId, TOKEN_KEY } from "@/utils/cart";
+import { TOKEN_KEY } from "@/utils/cart";
 import { authConfig, parseError, toPricing } from "./helpers";
 import type {
   CartSummary,
@@ -210,12 +210,10 @@ export async function applyUserCoupon(
 ): Promise<{ ok: boolean; unauthorized?: boolean; error?: string }> {
   const token = sessionStorage.getItem(TOKEN_KEY);
   if (!token) return { ok: false, unauthorized: true };
-  const userId = getUserId();
-  if (!userId) return { ok: false, error: "Missing user" };
   try {
     const { data } = await api.post(
       "/update-user-coupon",
-      { userId, CouponCode: couponCode },
+      { CouponCode: couponCode, action: couponCode ? "add" : "remove" },
       authConfig(token),
     );
     if (data.message === "success") return { ok: true };

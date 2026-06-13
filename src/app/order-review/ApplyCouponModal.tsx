@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { FiCheck, FiChevronLeft } from "react-icons/fi";
+import { FiCheck } from "react-icons/fi";
+import { Navbar } from "@/components";
 import { applyUserCoupon, type Coupon, removeUserCoupon } from "@/services";
+import { clsx } from "@/utils/helpers";
 import s from "./ApplyCouponModal.module.scss";
 
 type Props = {
@@ -24,8 +26,12 @@ export default function ApplyCouponModal({
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [closing, setClosing] = useState(false);
 
   const offLabel = `${Math.round(discountPercent)}% OFF`;
+
+  // play the slide-down, then unmount when it finishes
+  const requestClose = () => setClosing(true);
 
   async function apply(value: string) {
     const trimmed = value.trim();
@@ -39,7 +45,7 @@ export default function ApplyCouponModal({
       return;
     }
     await onChanged();
-    onClose();
+    requestClose();
   }
 
   async function remove() {
@@ -56,39 +62,15 @@ export default function ApplyCouponModal({
   }
 
   return (
-    <div className={s.overlay}>
-      <header className={s.header}>
-        <button
-          type="button"
-          className={s.back}
-          onClick={onClose}
-          aria-label="Close"
-        >
-          <FiChevronLeft size={24} aria-hidden="true" />
-        </button>
-        <h1 className={s.title}>Apply Coupon</h1>
-      </header>
+    <div
+      className={clsx(s.overlay, closing && s.closing)}
+      onAnimationEnd={() => {
+        if (closing) onClose();
+      }}
+    >
+      <Navbar title="Apply Coupon" onBack={requestClose} />
 
       <div className={s.body}>
-        <div className={s.inputWrap}>
-          <input
-            className={s.input}
-            type="text"
-            placeholder="Enter coupon code"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && apply(code)}
-          />
-          <button
-            type="button"
-            className={s.applyBtn}
-            onClick={() => apply(code)}
-            disabled={!code.trim() || busy}
-          >
-            APPLY
-          </button>
-        </div>
-
         {error && <p className={s.error}>{error}</p>}
 
         <h2 className={s.sectionTitle}>Available Coupons</h2>

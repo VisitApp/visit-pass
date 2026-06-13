@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { FiCheck, FiChevronRight, FiPercent } from "react-icons/fi";
+import { FiCheck, FiChevronRight } from "react-icons/fi";
 import { Navbar, ProgressBar } from "@/components";
 import {
   type CartSummary,
@@ -27,6 +27,7 @@ const ORDER = [
 ];
 
 const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
+const memberWord = (n: number) => (n === 1 ? "member" : "members");
 
 function OrderReview() {
   const router = useRouter();
@@ -35,6 +36,7 @@ function OrderReview() {
   const [showCoupon, setShowCoupon] = useState(false);
   const [paying, setPaying] = useState(false);
   const [payError, setPayError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const loadSummary = async () => {
     const res = await getCartSummary();
@@ -43,6 +45,7 @@ function OrderReview() {
       return;
     }
     if (res.ok && res.data) setSummary(res.data);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -108,11 +111,16 @@ function OrderReview() {
   return (
     <div className={s.page}>
       <main className={s.main}>
+        {(loading || paying) && (
+          <div className={s.loaderOverlay}>
+            <span className={s.spinner} aria-label="Loading" role="status" />
+          </div>
+        )}
         <Navbar title="Order Review" />
 
-        <ProgressBar value={60} className={s.progress} />
-
         <div className={s.scroll}>
+          <ProgressBar value={60} className={s.progress} />
+
           <h2 className={s.sectionTitle}>Pass Details</h2>
 
           <div className={s.passWrap}>
@@ -121,7 +129,9 @@ function OrderReview() {
               <div className={s.passInner}>
                 <span className={s.goldTag}>{planBadge}</span>
                 <h3 className={s.passTitle}>{planName}</h3>
-                <p className={s.passMembers}>{totalMembers} Members covered</p>
+                <p className={s.passMembers}>
+                  {totalMembers} {memberWord(totalMembers)} covered
+                </p>
                 <div className={s.passPriceRow}>
                   <span className={s.passPrice}>{inr(youPay)}</span>
                   <span className={s.passPer}>/year</span>
@@ -154,7 +164,13 @@ function OrderReview() {
             onClick={() => setShowCoupon(true)}
           >
             <span className={s.couponIcon}>
-              <FiPercent aria-hidden="true" />
+              <Image
+                className={s.couponIconImg}
+                src="/Coupon.png"
+                alt=""
+                width={20}
+                height={20}
+              />
             </span>
             <span className={s.couponBody}>
               <span className={s.couponTitle}>
@@ -169,23 +185,25 @@ function OrderReview() {
             <FiChevronRight className={s.couponChevron} aria-hidden="true" />
           </button>
 
-          <div className={s.divider} />
-
-          <div className={s.priceRow}>
+          <div className={`${s.priceRow} ${s.priceRowFirst}`}>
             <span>
-              {planName} {planBadge} x {totalMembers} members
+              {planName} {planBadge} x {totalMembers} {memberWord(totalMembers)}
             </span>
             <span>{inr(subtotal)}</span>
           </div>
-          <div className={`${s.priceRow} ${s.priceRowDiscount}`}>
-            <span>Discount</span>
-            <span>-{inr(discount)}</span>
-          </div>
-          <div className={`${s.priceRow} ${s.priceRowTotal}`}>
+          {discount > 0 && (
+            <div className={`${s.priceRow} ${s.priceRowDiscount}`}>
+              <span>Discount</span>
+              <span>-{inr(discount)}</span>
+            </div>
+          )}
+          <div
+            className={`${s.priceRow} ${s.priceRowTotal} ${s.priceRowTotalCost}`}
+          >
             <span className={s.priceRowLabelMuted}>Total Cost</span>
             <span>{inr(youPay)}</span>
           </div>
-          <div className={`${s.priceRow} ${s.priceRowTotal}`}>
+          <div className={`${s.priceRow} ${s.priceRowTotal} ${s.priceRowYouPay}`}>
             <span>You Pay</span>
             <span>{inr(youPay)}</span>
           </div>
