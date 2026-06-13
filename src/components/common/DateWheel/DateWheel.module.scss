@@ -1,0 +1,143 @@
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: rgba(16, 14, 21, 0.4);
+  animation: fadeIn 0.2s ease;
+}
+
+.closing {
+  animation: fadeOut 0.2s ease forwards;
+
+  .sheet {
+    animation: sheetDown 0.2s ease forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+.sheet {
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding-bottom: 8px;
+  animation: sheetUp 0.25s ease;
+}
+
+@keyframes sheetUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheetDown {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f1f4;
+}
+
+.headTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #100e15;
+}
+
+.cancel {
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #686670;
+  cursor: pointer;
+}
+
+.done {
+  border: none;
+  background: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #714fff;
+  cursor: pointer;
+}
+
+.wheels {
+  position: relative;
+  display: flex;
+  height: 200px;
+  padding: 0 16px;
+}
+
+/* center highlight band (one 40px row) */
+.selection {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 80px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f5f2ff;
+  pointer-events: none;
+}
+
+.column {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  text-align: center;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 2 rows of padding so the first/last item can reach the center band */
+.pad {
+  height: 80px;
+}
+
+.item {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.itemActive {
+  color: #100e15;
+  font-weight: 700;
+}

@@ -257,15 +257,23 @@
 }
 
 .couponTitle {
-  font-size: 14px;
+  color: var(--Primary-Text-New, #000);
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 13px;
+  font-style: normal;
   font-weight: 600;
-  color: #222226;
+  line-height: 140%;
+  letter-spacing: 0;
 }
 
 .couponSub {
-  font-size: 12px;
+  color: var(--Color-Text-Secondary, #686670);
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 11px;
+  font-style: normal;
   font-weight: 500;
-  color: #1eb865;
+  line-height: 160%;
+  letter-spacing: 0;
 }
 
 .couponChevron {
@@ -300,6 +308,10 @@
   margin: 24px -20px 12px;
   border-top: 10px solid #fafafa;
   padding: 24px 20px 0;
+}
+
+.priceRowFirst span:first-child {
+  font-weight: 600;
 }
 
 .priceRowDiscount {

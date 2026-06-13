@@ -1,4 +1,5 @@
 export { default as AuthGuard } from "./common/AuthGuard/AuthGuard";
+export { default as DateWheel } from "./common/DateWheel/DateWheel";
 export { default as FAQ } from "./common/FAQ/FAQ";
 export { default as Navbar } from "./common/Navbar/Navbar";
 export { default as ProgressBar } from "./common/ProgressBar/ProgressBar";

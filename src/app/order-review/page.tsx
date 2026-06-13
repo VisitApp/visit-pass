@@ -177,9 +177,7 @@ function OrderReview() {
                 {couponApplied ? `${couponCode} applied` : "Apply Coupon"}
               </span>
               <span className={s.couponSub}>
-                {couponApplied
-                  ? "Coupon discount applied"
-                  : "Extra discount up to 20%"}
+                {couponApplied ? "Coupon discount applied" : "View all coupons"}
               </span>
             </span>
             <FiChevronRight className={s.couponChevron} aria-hidden="true" />

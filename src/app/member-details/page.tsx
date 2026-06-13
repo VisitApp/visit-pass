@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Navbar } from "@/components";
+import { DateWheel, Navbar, ProgressBar } from "@/components";
 import {
   getCartSummary,
   type SelectedMember,
@@ -21,6 +21,15 @@ type Form = { name: string; dob: string; gender: string };
 
 const isSelf = (m: SelectedMember) => keyForMember(m.relationId) === "self";
 
+const CURRENT_YEAR = new Date().getFullYear();
+
+const formatDob = (dob: string) =>
+  new Date(dob).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+
 export default function MemberDetailsPage() {
   const router = useRouter();
   const [members, setMembers] = useState<SelectedMember[]>([]);
@@ -28,6 +37,8 @@ export default function MemberDetailsPage() {
   const [forms, setForms] = useState<Record<number, Form>>({});
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  // index of the member whose DOB wheel is open, or null
+  const [dobPicker, setDobPicker] = useState<number | null>(null);
 
   useEffect(() => {
     const initForms = (list: SelectedMember[]) => {
@@ -106,7 +117,9 @@ export default function MemberDetailsPage() {
   return (
     <div className={s.page}>
       <main className={s.main}>
-        <Navbar title="Member Details" />
+        <Navbar title="Fill Details" />
+
+        <ProgressBar value={80} className={s.progress} />
 
         <div className={s.scroll}>
           <h1 className={s.heading}>Add member details</h1>
@@ -129,22 +142,34 @@ export default function MemberDetailsPage() {
                         placeholder="Full name"
                         aria-label="Full name"
                         value={f.name}
-                        onChange={(e) => setField(i, "name", e.target.value)}
+                        onChange={(e) =>
+                          setField(
+                            i,
+                            "name",
+                            e.target.value
+                              .replace(/[^a-zA-Z ]/g, "")
+                              .replace(/^\s+/, "")
+                              .replace(/\s{2,}/g, " "),
+                          )
+                        }
                       />
                     </div>
-                    <div className={s.inputWrapper}>
-                      <input
-                        className={s.field}
-                        type="date"
-                        aria-label="Date of birth"
-                        value={f.dob}
-                        onChange={(e) => setField(i, "dob", e.target.value)}
-                      />
-                    </div>
+                    <button
+                      type="button"
+                      className={s.inputWrapper}
+                      aria-label="Date of birth"
+                      onClick={() => setDobPicker(i)}
+                    >
+                      <span
+                        className={`${s.field} ${f.dob ? "" : s.placeholder}`}
+                      >
+                        {f.dob ? formatDob(f.dob) : "Date of birth"}
+                      </span>
+                    </button>
                     {isSelf(m) && (
                       <div className={s.inputWrapper}>
                         <select
-                          className={s.field}
+                          className={`${s.field} ${f.gender ? "" : s.placeholder}`}
                           aria-label="Gender"
                           value={f.gender}
                           onChange={(e) =>
@@ -177,6 +202,15 @@ export default function MemberDetailsPage() {
             {submitting ? "Saving…" : "Save & Activate"}
           </button>
         </footer>
+
+        {dobPicker !== null && (
+          <DateWheel
+            value={forms[dobPicker]?.dob ?? ""}
+            maxYear={CURRENT_YEAR}
+            onConfirm={(dob) => setField(dobPicker, "dob", dob)}
+            onClose={() => setDobPicker(null)}
+          />
+        )}
       </main>
     </div>
   );

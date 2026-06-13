@@ -27,6 +27,15 @@ function OrderConfirmed() {
     const urlToken = searchParams.get("token");
     if (urlToken) {
       sessionStorage.setItem(TOKEN_KEY, urlToken);
+      // strip the token from the URL once stored (keep other params)
+      const params = new URLSearchParams(window.location.search);
+      params.delete("token");
+      const qs = params.toString();
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${qs ? `?${qs}` : ""}`,
+      );
     }
 
     (async () => {

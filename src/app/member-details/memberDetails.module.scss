@@ -19,6 +19,11 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+
+.progress {
+  margin: 4px 20px 0;
 }
 
 .scroll {
@@ -56,22 +61,24 @@
 }
 
 .card {
-  padding: 24px;
+  padding: 12px;
   margin-bottom: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 28px;
+  border-radius: 12px;
+  border: 1px solid var(--Color-Border-Subtle, #f2f2f3);
   background: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .relation {
   display: block;
-  margin-bottom: 16px;
-  color: #6347d1;
+  margin-bottom: 8px;
+  color: var(--Color-Border-Brand-Intense, #551ee3);
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 12px;
-  font-weight: 700;
 }
 
 .fields {
@@ -81,9 +88,16 @@
 }
 
 .inputWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 44px;
   border: 1px solid #e5e7eb;
-  border-radius: 20px;
-  padding: 16px 20px;
+  border-radius: 12px;
+  padding: 0 16px;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
   transition: border-color 0.15s ease;
 
   &:focus-within {
@@ -91,15 +105,27 @@
   }
 }
 
+.field::placeholder {
+  color: #9ca3af;
+}
+
+.placeholder {
+  color: #9ca3af;
+}
+
 .field {
   width: 100%;
   border: none;
   padding: 0;
   background: transparent;
-  font-size: 18px;
-  font-weight: 500;
-  color: #1f2937;
   outline: none;
+  color: var(--Color-Text-Primary, #222226);
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  letter-spacing: -0.12px;
 }
 
 select.field {
