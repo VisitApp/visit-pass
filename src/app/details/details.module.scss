@@ -14,11 +14,55 @@
   max-height: 900px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: var(--background);
-  box-shadow: 0 24px 70px rgba(16, 14, 21, 0.22);
+  background: linear-gradient(
+    180deg,
+    var(--Sand-200, #fdedd6) 0.01%,
+    #fff 23.92%
+  );
+  box-shadow: 0 2px 4px 0 rgba(108, 93, 211, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}
+
+.loaderOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249, 250, 251, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.spinner {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(113, 79, 255, 0) 0deg,
+    #714fff 300deg,
+    #4c1d95 360deg
+  );
+  /* carve out the centre so it reads as a ring */
+  mask: radial-gradient(farthest-side, transparent 62%, #000 64%);
+  -webkit-mask: radial-gradient(farthest-side, transparent 62%, #000 64%);
+  animation: spin 0.9s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  filter: drop-shadow(0 0 8px rgba(113, 79, 255, 0.5));
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.progress {
+  margin: 4px 20px 0;
 }
 
 .scroll {
@@ -146,4 +190,250 @@
   font-size: 13px;
   font-weight: 500;
   color: #e3342f;
+}
+
+/* ---- plan card (inlined, details-only look) ---- */
+.outerBorder {
+  width: 100%;
+  margin: 20px auto;
+  padding: 2px;
+  background: #ece9f2;
+  border-radius: 12px;
+  position: relative;
+}
+
+.selected {
+  background: linear-gradient(
+    120deg,
+    #ed825e 0%,
+    #ffffff 25%,
+    #f9c40c 50%,
+    #ffffff 75%,
+    #ed825e 100%
+  );
+  background-size: 200% 200%;
+  animation: goldBorderFlow 4s linear infinite;
+}
+
+@keyframes goldBorderFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .selected {
+    animation: none;
+  }
+}
+
+.card {
+  position: relative;
+  height: 100%;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  right: 32px;
+  z-index: 10;
+  background: linear-gradient(94deg, #0f0045 -0.01%, #714fff 99.99%);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 6px;
+  border-radius: 200px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  padding: 16px 12px 12px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #000;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed #d8d7db;
+  margin-bottom: 16px;
+}
+
+.headerInner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.goldTag {
+  background: linear-gradient(
+    to right,
+    #f9c40c 0%,
+    #fdf76d 33%,
+    #dd9900 67%,
+    #ffd600 100%
+  );
+  color: #754100;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.tagline {
+  color: #000;
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: -0.24px;
+}
+
+.priceBlock {
+}
+
+.startingAt {
+  color: #686670;
+
+  font-size: 13px;
+
+  font-weight: 400;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.price,
+.per {
+  color: #000;
+}
+
+.price {
+  color: #222226;
+  font-family: "Bricolage Grotesque";
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.per {
+  color: #686670;
+
+  font-size: 13px;
+
+  font-weight: 400;
+}
+
+.billed {
+  color: #000;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16.698px;
+  letter-spacing: -0.24px;
+  margin-top: 4px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dividerLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: #686670;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dividerLine {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(161, 118, 59, 0.5) 0%,
+    rgba(227, 195, 150, 0) 100%
+  );
+}
+
+.benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #fdfaf6;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconBox {
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fdf2e3;
+  border-radius: 8px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #fb923c;
+}
+
+.benefitTitle {
+  font-weight: 600;
+  color: #222226;
+  font-size: 13px;
+}
+
+.benefitSubtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: #686670;
+}
+
+.highlight {
+  color: #1eb865;
+  font-weight: 700;
+  font-size: 12px;
+  font-style: italic;
 }

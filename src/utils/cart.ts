@@ -1,5 +1,4 @@
 export const TOKEN_KEY = "opd_auth_token";
-export const COVER_VARIANT_KEY = "opd_cover_variant_id";
 export const USER_KEY = "opd_user_info";
 /** dependents carried from order-confirmed → member-details */
 export const MEMBERS_KEY = "opd_members";

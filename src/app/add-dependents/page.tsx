@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { FiCheck, FiMinus, FiPlus, FiX } from "react-icons/fi";
-import { Navbar } from "@/components";
+import { Navbar, ProgressBar } from "@/components";
 import {
   addDependentPricing,
   addToCart,
@@ -13,11 +13,7 @@ import {
   removeDependentPricing,
   type SelectedMember,
 } from "@/services";
-import {
-  COVER_VARIANT_KEY,
-  MEMBER_RELATION_ID,
-  RELATION_ID_TO_KEY,
-} from "@/utils/cart";
+import { MEMBER_RELATION_ID, RELATION_ID_TO_KEY } from "@/utils/cart";
 import s from "./addDependents.module.scss";
 
 type MemberType = "single" | "multi";
@@ -77,8 +73,9 @@ function countsFromMembers(members: SelectedMember[]): Record<string, number> {
   return next;
 }
 
-export default function AddDependentsPage() {
+function AddDependents() {
   const router = useRouter();
+  const coverVariantId = Number(useSearchParams().get("cover") || 0);
   const [counts, setCounts] = useState<Record<string, number>>({
     self: 1,
   });
@@ -107,13 +104,12 @@ export default function AddDependentsPage() {
   useEffect(() => {
     if (loaded.current) return;
     loaded.current = true;
-    const cv = Number(sessionStorage.getItem(COVER_VARIANT_KEY) || 0);
-    if (!cv) {
+    if (!coverVariantId) {
       router.replace("/details");
       return;
     }
     (async () => {
-      const res = await getCartPricing(cv);
+      const res = await getCartPricing(coverVariantId);
       if (res.unauthorized) {
         router.replace("/login");
         return;
@@ -132,9 +128,6 @@ export default function AddDependentsPage() {
   // each "+" tap adds one member server-side and returns updated pricing
   async function addMember(key: string) {
     if (busy) return;
-    const coverVariantId = Number(
-      sessionStorage.getItem(COVER_VARIANT_KEY) || 0,
-    );
     if (!coverVariantId) {
       router.replace("/details");
       return;
@@ -159,9 +152,6 @@ export default function AddDependentsPage() {
   // each "−"/"✕" removes one member of that relation by its dependentId
   async function removeMember(key: string) {
     if (busy) return;
-    const coverVariantId = Number(
-      sessionStorage.getItem(COVER_VARIANT_KEY) || 0,
-    );
     const relIds = key === "spouse" ? [5, 6] : [MEMBER_RELATION_ID[key]];
     const match = members
       .filter((m) => m.dependentId != null && relIds.includes(m.relationId ?? -1))
@@ -190,29 +180,23 @@ export default function AddDependentsPage() {
 
   async function handleContinue() {
     if (submitting) return;
-    const coverVariantId = Number(
-      sessionStorage.getItem(COVER_VARIANT_KEY) || 0,
-    );
-
     if (!coverVariantId) {
       router.replace("/details");
       return;
     }
 
-    {
-      setSubmitting(true);
-      const result = await addToCart(coverVariantId);
-      setSubmitting(false);
-      if (result.unauthorized) {
-        router.replace("/login");
-        return;
-      }
-      if (!result.ok) {
-        showToast(result.error || "Couldn't add to cart");
-        return;
-      }
+    setSubmitting(true);
+    const result = await addToCart(coverVariantId);
+    setSubmitting(false);
+    if (result.unauthorized) {
+      router.replace("/login");
+      return;
     }
-    router.push("/order-review");
+    if (!result.ok) {
+      showToast(result.error || "Couldn't add to cart");
+      return;
+    }
+    router.push(`/order-review?cover=${coverVariantId}`);
   }
 
   const totalMembers = Object.values(counts).reduce((a, b) => a + b, 0);
@@ -332,9 +316,7 @@ export default function AddDependentsPage() {
         {toast && <div className={s.toast}>{toast}</div>}
         <Navbar title="Add Members" />
 
-        <div className={s.progress}>
-          <span className={s.progressFill} />
-        </div>
+        <ProgressBar value={40} className={s.progress} />
 
         <div className={s.scroll}>
           <h1 className={s.heading}>Who&apos;s getting covered?</h1>
@@ -373,5 +355,13 @@ export default function AddDependentsPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function AddDependentsPage() {
+  return (
+    <Suspense fallback={null}>
+      <AddDependents />
+    </Suspense>
   );
 }

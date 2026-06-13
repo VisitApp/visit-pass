@@ -53,19 +53,7 @@
 
 /* progress bar */
 .progress {
-  height: 6px;
   margin: 4px 20px 0;
-  border-radius: 999px;
-  background: #ece9f2;
-  overflow: hidden;
-}
-
-.progressFill {
-  display: block;
-  width: 40%;
-  height: 100%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #4c1d95 0%, #714fff 100%);
 }
 
 .scroll {

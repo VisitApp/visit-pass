@@ -5,13 +5,19 @@ export type UserInfo = {
   visitPaymentMade?: boolean;
 };
 
+export type PlanBenefit = {
+  heading: string;
+  subHeading: string;
+  imgUrl: string;
+};
+
 export type Plan = {
   coverVariantId: number;
   name: string;
   cost: string;
   coverId: number;
   description: string;
-  standardPlanDescription: unknown;
+  standardPlanDescription: PlanBenefit[] | null;
 };
 
 export type SelectedMember = {

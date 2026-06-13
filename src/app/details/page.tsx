@@ -2,12 +2,27 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { GoldCard, Navbar } from "@/components";
+import { Navbar, ProgressBar } from "@/components";
 import { addToCart, getAvailableTopups, type Plan } from "@/services";
-import { COVER_VARIANT_KEY, TOKEN_KEY } from "@/utils/cart";
+import { clsx } from "@/utils/helpers";
+import { TOKEN_KEY } from "@/utils/cart";
 import s from "./details.module.scss";
 
 const formatCost = (cost: string) => `₹${Math.round(parseFloat(cost))}`;
+
+// wrap any "NN% off" in the subheading with a highlight span
+const renderSubHeading = (text: string) => {
+  const parts = text.split(/(\d+%\s*off)/gi);
+  return parts.map((part, i) =>
+    /\d+%\s*off/i.test(part) ? (
+      <span className={s.highlight} key={i}>
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+};
 
 export default function DetailsPage() {
   const router = useRouter();
@@ -32,8 +47,7 @@ export default function DetailsPage() {
       setError(result.error || "Couldn't add to cart");
       return;
     }
-    sessionStorage.setItem(COVER_VARIANT_KEY, String(selectedId));
-    router.push("/add-dependents");
+    router.push(`/add-dependents?cover=${selectedId}`);
   }
 
   useEffect(() => {
@@ -52,7 +66,6 @@ export default function DetailsPage() {
       }
       if (res.ok) {
         setPlans(res.plans ?? []);
-        setSelectedId(res.selectedCoverVariantId ?? null);
       } else {
         setError(res.error || "Couldn't load plans. Please try again.");
       }
@@ -63,22 +76,84 @@ export default function DetailsPage() {
   return (
     <div className={s.page}>
       <main className={s.main}>
+        {loading && (
+          <div className={s.loaderOverlay}>
+            <span className={s.spinner} aria-label="Loading" role="status" />
+          </div>
+        )}
         <Navbar title="OPD Pass Membership" />
 
-        <div className={s.scroll}>
-          {loading && <p className={s.state}>Loading plans…</p>}
+        <ProgressBar value={20} className={s.progress} />
 
+        <div className={s.scroll}>
           {!loading &&
-            plans.map((plan) => (
-              <GoldCard
-                key={plan.coverVariantId}
-                name={plan.name}
-                badge={plan.description}
-                price={formatCost(plan.cost)}
-                selected={selectedId === plan.coverVariantId}
-                onClick={() => setSelectedId(plan.coverVariantId)}
-              />
-            ))}
+            plans.map((plan) => {
+              const selected = selectedId === plan.coverVariantId;
+              return (
+                <div
+                  key={plan.coverVariantId}
+                  className={clsx(s.outerBorder, selected && s.selected)}
+                  onClick={() => setSelectedId(plan.coverVariantId)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <div className={s.badge}>Top family pick</div>
+                  <div className={s.card}>
+                    <div className={s.content}>
+                      <header className={s.header}>
+                        <div className={s.headerInner}>
+                          <div className={s.titleRow}>
+                            <h1 className={s.title}>{plan.name}</h1>
+                            <span className={s.goldTag}>
+                              {plan.description}
+                            </span>
+                          </div>
+                          <div className={s.priceBlock}>
+                            <p className={s.startingAt}>starting at</p>
+                            <div className={s.priceRow}>
+                              <span className={s.price}>
+                                {formatCost(plan.cost)}
+                              </span>
+                              <span className={s.per}>/year</span>
+                            </div>
+                          </div>
+                        </div>
+                      </header>
+
+                      <div className={s.divider}>
+                        <span className={s.dividerLabel}>
+                          WHAT&apos;S INCLUDED
+                        </span>
+                        <span className={s.dividerLine} />
+                      </div>
+
+                      <section className={s.benefits}>
+                        {plan.standardPlanDescription?.map((b) => (
+                          <div className={s.benefit} key={b.heading}>
+                            <div className={s.iconBox}>
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                className={s.icon}
+                                src={b.imgUrl}
+                                alt=""
+                                width={24}
+                                height={24}
+                              />
+                            </div>
+                            <div>
+                              <h3 className={s.benefitTitle}>{b.heading}</h3>
+                              <p className={s.benefitSubtitle}>
+                                {renderSubHeading(b.subHeading)}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </section>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
         </div>
 
         <footer className={s.footer}>

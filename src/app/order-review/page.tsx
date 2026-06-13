@@ -1,17 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import { FiCheck, FiChevronRight, FiPercent } from "react-icons/fi";
-import { Navbar } from "@/components";
+import { Navbar, ProgressBar } from "@/components";
 import {
   type CartSummary,
   getCartSummary,
   saveCart,
   transactUrl,
 } from "@/services";
-import { COVER_VARIANT_KEY, keyForMember, RELATION_META } from "@/utils/cart";
+import { keyForMember, RELATION_META } from "@/utils/cart";
 import ApplyCouponModal from "./ApplyCouponModal";
 import s from "./orderReview.module.scss";
 
@@ -28,8 +28,9 @@ const ORDER = [
 
 const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
-export default function OrderReviewPage() {
+function OrderReview() {
   const router = useRouter();
+  const cover = useSearchParams().get("cover");
   const [summary, setSummary] = useState<CartSummary | null>(null);
   const [showCoupon, setShowCoupon] = useState(false);
   const [paying, setPaying] = useState(false);
@@ -45,13 +46,13 @@ export default function OrderReviewPage() {
   };
 
   useEffect(() => {
-    if (!sessionStorage.getItem(COVER_VARIANT_KEY)) {
+    if (!cover) {
       router.replace("/details");
       return;
     }
     loadSummary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
+  }, [router, cover]);
 
   const couponApplied = (summary?.couponApplied ?? 0) === 1;
   const couponCode = summary?.coupons?.[0]?.couponName ?? "";
@@ -109,9 +110,7 @@ export default function OrderReviewPage() {
       <main className={s.main}>
         <Navbar title="Order Review" />
 
-        <div className={s.progress}>
-          <span className={s.progressFill} />
-        </div>
+        <ProgressBar value={66} className={s.progress} />
 
         <div className={s.scroll}>
           <h2 className={s.sectionTitle}>Pass Details</h2>
@@ -222,5 +221,13 @@ export default function OrderReviewPage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function OrderReviewPage() {
+  return (
+    <Suspense fallback={null}>
+      <OrderReview />
+    </Suspense>
   );
 }

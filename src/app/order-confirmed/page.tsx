@@ -6,8 +6,8 @@ import { Suspense, useEffect, useState } from "react";
 import { Navbar } from "@/components";
 import PaymentDone from "@/icons/PaymentDone.svg";
 import Receipt from "@/icons/receipt.svg";
-import { getCartPricing, getCartSummary } from "@/services";
-import { COVER_VARIANT_KEY, MEMBERS_KEY, TOKEN_KEY } from "@/utils/cart";
+import { getCartSummary } from "@/services";
+import { MEMBERS_KEY, TOKEN_KEY } from "@/utils/cart";
 import s from "./orderConfirmed.module.scss";
 
 const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
@@ -40,15 +40,8 @@ function OrderConfirmed() {
           MEMBERS_KEY,
           JSON.stringify(summary.data.selectedMembers),
         );
-      }
-
-      const cv = Number(sessionStorage.getItem(COVER_VARIANT_KEY) || 0);
-      if (cv) {
-        const res = await getCartPricing(cv);
-        if (res.ok && res.data) {
-          setTotalMembers(res.data.selectedMembers.length);
-          setAmountPaid(res.data.finalCost);
-        }
+        setTotalMembers(summary.data.selectedMembers.length);
+        setAmountPaid(summary.data.finalCost);
       }
       setLoading(false);
     })();

@@ -4,16 +4,11 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Navbar } from "@/components";
 import {
-  getCartPricing,
+  getCartSummary,
   type SelectedMember,
   updateDependentDetails,
 } from "@/services";
-import {
-  COVER_VARIANT_KEY,
-  keyForMember,
-  MEMBERS_KEY,
-  RELATION_META,
-} from "@/utils/cart";
+import { keyForMember, MEMBERS_KEY, RELATION_META } from "@/utils/cart";
 import s from "./memberDetails.module.scss";
 
 const meta = (relationId: number | null) =>
@@ -61,13 +56,8 @@ export default function MemberDetailsPage() {
       }
     }
 
-    const cv = Number(sessionStorage.getItem(COVER_VARIANT_KEY) || 0);
-    if (!cv) {
-      router.replace("/details");
-      return;
-    }
     (async () => {
-      const res = await getCartPricing(cv);
+      const res = await getCartSummary();
       if (res.unauthorized) {
         router.replace("/login");
         return;
