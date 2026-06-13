@@ -110,7 +110,7 @@ function OrderReview() {
       <main className={s.main}>
         <Navbar title="Order Review" />
 
-        <ProgressBar value={66} className={s.progress} />
+        <ProgressBar value={60} className={s.progress} />
 
         <div className={s.scroll}>
           <h2 className={s.sectionTitle}>Pass Details</h2>

@@ -120,6 +120,8 @@
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+  background: #f2f2f3;
+  padding: 2px;
 }
 
 .memberLabel {
@@ -220,6 +222,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 20px 8px;
+  background: #fafafa;
 }
 
 .summaryCol {
@@ -233,19 +236,22 @@
 }
 
 .summaryLabel {
-  font-size: 12px;
-  font-weight: 500;
-  color: #686670;
+  color: var(--Color-Text-Secondary, #686670);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 600;
 }
 
 .summaryValue {
-  font-size: 14px;
+  color: var(--Color-Text-Secondary, #686670);
+  font-size: 12px;
+  font-style: normal;
   font-weight: 600;
-  color: #222226;
+  margin-bottom: 8.5px;
+  display: inline-block;
 }
 
 .summaryCost {
-  font-family: var(--font-bricolage), var(--font-display);
   font-size: 18px;
   font-weight: 700;
   color: #714fff;
