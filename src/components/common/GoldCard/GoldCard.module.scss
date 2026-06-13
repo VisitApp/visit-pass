@@ -66,35 +66,36 @@
 
 /* ---- header ---- */
 .header {
-  position: relative;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border-radius: 24px;
-  padding: 32px;
+  padding: 16px;
   margin-bottom: 24px;
   color: #fff;
-  background: url("/images/GoldCardBg.png") center center / cover no-repeat;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.2),
+      transparent 60%
+    ),
+    url("/images/GoldCardBg.png") center center / cover no-repeat;
   box-shadow:
     0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
 }
 
-.headerGlow {
-  position: absolute;
-  inset: 0;
-  opacity: 0.2;
-  background: radial-gradient(circle at top right, #fff, transparent 60%);
-}
-
 .headerInner {
-  position: relative;
-  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .titleRow {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .title {
@@ -126,14 +127,20 @@
 }
 
 .tagline {
-  font-size: 14px;
-  font-weight: 500;
-  opacity: 0.9;
-  margin-bottom: 48px;
+  color: var(--Color-Text-White, #fff);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: -0.24px;
 }
 
 .priceBlock {
-  margin-top: 16px;
+  margin-top: 40px;
 }
 
 .startingAt {
@@ -158,7 +165,8 @@
 }
 
 .price {
-  font-family: var(--font-bricolage), var(--font-display);
+  font-family: var(--font-bricolage), var(--font-display), var(--font-inter),
+    Inter, sans-serif;
   font-size: 24px;
   font-weight: 700;
 }
@@ -168,8 +176,13 @@
 }
 
 .billed {
+  color: var(--Color-Text-White, #fff);
+  font-family: var(--font-inter), Inter, sans-serif;
   font-size: 12px;
-  color: #fff;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16.698px;
+  letter-spacing: -0.24px;
   margin-top: 4px;
 }
 

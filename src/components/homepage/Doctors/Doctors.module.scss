@@ -155,17 +155,11 @@
 }
 
 .avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   width: 55px;
   height: 55px;
   border-radius: 8px 8px 0 0;
+  object-fit: cover;
   background: #ece7fb;
-  color: #714fff;
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 700;
 }
 
 .yearsBadge {
@@ -240,9 +234,18 @@
 }
 
 .paidBy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 12px;
   font-weight: 600;
   color: #686670;
+}
+
+.paidByLogo {
+  height: 16px;
+  width: auto;
+  object-fit: contain;
 }
 
 .price {

@@ -152,10 +152,16 @@
   width: 100%;
   height: 60px;
   border-radius: 10px;
-  background: #d9d9d9;
+  background: #fafafa;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.productImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: contain;
 }
 
 .productBadge {
@@ -177,8 +183,8 @@
 
 .productAdd {
   position: absolute;
-  right: -9px;
-  bottom: -9px;
+  right: 4px;
+  bottom: 4px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -204,14 +210,22 @@
 }
 
 .productName {
-  font-family: var(--font-inter), Inter, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1.25;
-  color: var(--Color-Text-Primary, #100e15);
-  white-space: nowrap;
   overflow: hidden;
+  color: var(--flat-dark-01, #121217);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 6.852px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 10.278px;
+  letter-spacing: -0.137px;
+  margin-bottom: 2px;
 }
 
 .productPrice {
@@ -220,15 +234,28 @@
   gap: 4px;
   font-family: var(--font-inter), Inter, sans-serif;
 }
+.productPrice strong {
+  overflow: hidden;
+  color: var(--Primary-Text-New, #000);
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  text-overflow: ellipsis;
+  font-family: var(--font-inter), Inter, sans-serif;
+  font-size: 6.852px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 7.994px;
+}
 
 .productPrice strong {
-  font-size: 12px;
+  font-size: 6.852px;
   font-weight: 700;
   color: var(--Color-Text-Primary, #100e15);
 }
 
 .productMrp {
-  font-size: 9px;
-  color: #9a98a0;
+  font-size: 6.852px;
+  color: #686670;
   text-decoration: line-through;
 }

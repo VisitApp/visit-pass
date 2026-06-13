@@ -23,6 +23,7 @@ export default function ActivatedPage() {
   const [loading, setLoading] = useState(true);
   const [planName, setPlanName] = useState("OPD Pass Gold");
   const [members, setMembers] = useState<SelectedMember[]>([]);
+  const [price, setPrice] = useState(2900);
   const [validity, setValidity] = useState("");
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function ActivatedPage() {
       }
       if (res.ok && res.data) {
         setMembers(res.data.selectedMembers);
+        if (res.data.finalCost > 0) setPrice(res.data.finalCost);
         if (res.data.selectedOpdPlan?.name) {
           setPlanName(res.data.selectedOpdPlan.name);
         }
@@ -77,6 +79,18 @@ export default function ActivatedPage() {
               <span className={s.goldTag}>GOLD</span>
               <h2 className={s.passTitle}>{planName}</h2>
               <p className={s.passMembers}>{members.length} Members covered</p>
+              {price > 0 && (
+                <div className={s.priceBlock}>
+                  <p className={s.startingAt}>starting at</p>
+                  <div className={s.priceRow}>
+                    <span className={s.price}>
+                      ₹{price.toLocaleString("en-IN")}
+                    </span>
+                    <span className={s.per}>/year</span>
+                  </div>
+                  <p className={s.billed}>billed annually</p>
+                </div>
+              )}
               <div className={s.passFoot}>
                 <p className={s.passValidity}>Validity: {validity}</p>
                 <span className={s.activeBadge}>Active</span>

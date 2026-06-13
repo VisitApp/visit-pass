@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { doctors } from "@/constants";
 import s from "./Doctors.module.scss";
 
@@ -25,7 +26,13 @@ export default function Doctors() {
 
               <div className={s.cardTop}>
                 <div className={s.avatarWrap}>
-                  <span className={s.avatar}>{doc.initials}</span>
+                  <Image
+                    className={s.avatar}
+                    src={doc.img}
+                    alt={doc.name}
+                    width={55}
+                    height={55}
+                  />
                   <span className={s.yearsBadge}>{doc.years}</span>
                 </div>
                 <div className={s.info}>
@@ -37,7 +44,16 @@ export default function Doctors() {
               </div>
 
               <div className={s.priceRow}>
-                <span className={s.paidBy}>Paid by VISIT</span>
+                <span className={s.paidBy}>
+                  Paid by
+                  <Image
+                    className={s.paidByLogo}
+                    src="/images/VisitColored.png"
+                    alt="VISIT"
+                    width={48}
+                    height={16}
+                  />
+                </span>
                 <span className={s.price}>
                   You Pay: <s className={s.priceOld}>{doc.priceOld}</s>{" "}
                   <strong className={s.priceNew}>{doc.priceNew}</strong>

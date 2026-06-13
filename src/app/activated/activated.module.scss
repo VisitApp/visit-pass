@@ -12,7 +12,7 @@
   max-width: 440px;
   height: calc(100dvh - 2 * var(--space-4));
   max-height: 900px;
-  border-radius: 28px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   background: #f9fafb;
   box-shadow: 0 24px 70px rgba(16, 14, 21, 0.22);
@@ -93,8 +93,9 @@
   border-radius: 24px;
   padding: 20px;
   margin-bottom: 28px;
+  max-height: 178px;
   color: #fff;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: url("/images/GoldCardBg.png") center center / cover no-repeat;
   box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.3);
 }
 
@@ -112,28 +113,81 @@
 .goldTag {
   position: relative;
   display: inline-block;
-  background: #ffd700;
-  color: #8b6e00;
+  background: linear-gradient(
+    to right,
+    #f9c40c 0%,
+    #fdf76d 33%,
+    #dd9900 67%,
+    #ffd600 100%
+  );
+  color: #713f12;
   font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 4px 10px;
-  border-radius: 6px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 4px;
   margin-bottom: 8px;
 }
 
 .passTitle {
   position: relative;
+  font-family: var(--font-bricolage), var(--font-display);
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 4px;
+  background: linear-gradient(
+    96deg,
+    var(--Warning-50, #fffbeb) -2.62%,
+    #fcde64 83.9%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .passMembers {
   position: relative;
   font-size: 14px;
   opacity: 0.9;
-  margin-bottom: 48px;
+  margin-bottom: 16px;
+}
+
+.priceBlock {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.startingAt {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fde047;
+}
+
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.price {
+  font-family: var(--font-bricolage), var(--font-display), var(--font-inter),
+    Inter, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.per {
+  font-size: 18px;
+  background: linear-gradient(180deg, #fffbeb 0%, #fcde64 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.billed {
+  font-size: 12px;
+  color: #fff;
+  margin-top: 4px;
 }
 
 .passFoot {

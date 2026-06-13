@@ -60,7 +60,7 @@ type GoldCardProps = {
 export default function GoldCard({
   name = "OPD PASS",
   badge = "GOLD",
-  price,
+  price = "2900",
   selected,
   onClick,
 }: GoldCardProps) {
@@ -75,7 +75,6 @@ export default function GoldCard({
       <div className={s.card}>
         <div className={s.content}>
           <header className={s.header}>
-            <div className={s.headerGlow} aria-hidden="true" />
             <div className={s.headerInner}>
               <div className={s.titleRow}>
                 <h1 className={s.title}>{name}</h1>
@@ -86,7 +85,7 @@ export default function GoldCard({
                 <div className={s.priceBlock}>
                   <p className={s.startingAt}>starting at</p>
                   <div className={s.priceRow}>
-                    <span className={s.price}>{price}</span>
+                    <span className={s.price}>₹{price}</span>
                     <span className={s.per}>/year</span>
                   </div>
                   <p className={s.billed}>billed annually</p>

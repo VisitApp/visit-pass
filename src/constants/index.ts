@@ -117,11 +117,41 @@ export const tests: TestCardData[] = [
 ];
 
 export const products = [
-  { name: "Paracetamol 500mg", price: "₹40", mrp: "₹50", off: "20%" },
-  { name: "Vitamin D3", price: "₹180", mrp: "₹240", off: "25%" },
-  { name: "Cough Syrup", price: "₹95", mrp: "₹120", off: "21%" },
-  { name: "Multivitamin", price: "₹320", mrp: "₹420", off: "24%" },
-  { name: "Pain Relief Gel", price: "₹110", mrp: "₹140", off: "21%" },
+  {
+    name: "Himalaya Liv. 52 DS Tablet",
+    price: "₹140",
+    mrp: "₹175",
+    off: "20%",
+    img: "/medicines/HimalayaLiv.png",
+  },
+  {
+    name: "Tata 1mg Triple Strength Omega 3 Fish Oil",
+    price: "₹450",
+    mrp: "₹600",
+    off: "25%",
+    img: "/medicines/Omega3.png",
+  },
+  {
+    name: "Disprin Regular 325mg",
+    price: "₹95",
+    mrp: "₹120",
+    off: "21%",
+    img: "/medicines/Dispirine.png",
+  },
+  {
+    name: "Shelcal 500 Calcium + Vitamin D3 Tablet",
+    price: "₹320",
+    mrp: "₹420",
+    off: "24%",
+    img: "/medicines/Shelcal.png",
+  },
+  {
+    name: "Ensure Diabetes Care Nutrition Drink Vanilla Delight",
+    price: "₹550",
+    mrp: "₹700",
+    off: "21%",
+    img: "/medicines/Ensure.png",
+  },
 ];
 
 export const doctors = [
@@ -131,7 +161,7 @@ export const doctors = [
     qualification: "MBBS, Diploma",
     clinic: "Visit Health Clinic Marathahalli",
     years: "15+ Years",
-    initials: "AA",
+    img: "/doctors/AnilAshok.png",
     priceOld: "₹600",
     priceNew: "₹300",
   },
@@ -141,7 +171,7 @@ export const doctors = [
     qualification: "MBBS, MD",
     clinic: "Visit Health Clinic Indiranagar",
     years: "9+ Years",
-    initials: "PS",
+    img: "/doctors/PoojaSingh.png",
     priceOld: "₹700",
     priceNew: "₹350",
   },
@@ -151,7 +181,7 @@ export const doctors = [
     qualification: "MBBS, DCH",
     clinic: "Visit Health Clinic Koramangala",
     years: "12+ Years",
-    initials: "SS",
+    img: "/doctors/ShivangiSharma.png",
     priceOld: "₹600",
     priceNew: "₹300",
   },

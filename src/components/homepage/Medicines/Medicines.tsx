@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FiPlus } from "react-icons/fi";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -53,6 +54,13 @@ export default function Medicines() {
               <SwiperSlide className={s.productSlide} key={`${p.name}-${i}`}>
                 <article className={s.productCard}>
                   <div className={s.productThumb}>
+                    <Image
+                      className={s.productImg}
+                      src={p.img}
+                      alt={p.name}
+                      width={120}
+                      height={60}
+                    />
                     <span className={s.productAdd}>
                       <FiPlus aria-hidden="true" />
                     </span>
